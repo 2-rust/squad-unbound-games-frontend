@@ -1,0 +1,52 @@
+import type { Metadata } from "next";
+import localFont from "next/font/local";
+import { Space_Grotesk } from "next/font/google";
+import "@rainbow-me/rainbowkit/styles.css";
+import "./globals.css";
+import "./squad.css";
+import { SiteNav } from "./_components/site-nav";
+import { Web3Providers } from "@/components/providers";
+import { AutoShapeNetwork } from "@/components/auto-shape-network";
+
+const geistSans = localFont({
+  src: "./fonts/GeistVF.woff",
+  variable: "--font-geist-sans",
+  weight: "100 900",
+});
+
+const geistMono = localFont({
+  src: "./fonts/GeistMonoVF.woff",
+  variable: "--font-geist-mono",
+  weight: "100 900",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+});
+
+export const metadata: Metadata = {
+  title: "Squad Unbound MVP",
+  description:
+    "Minimal Next.js recreation of squad.unbound.games for showcasing the fighter flow.",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} antialiased`}
+      >
+        <Web3Providers>
+          <AutoShapeNetwork />
+          <SiteNav />
+          <div className="pt-[70px] md:pt-[70px]">{children}</div>
+        </Web3Providers>
+      </body>
+    </html>
+  );
+}

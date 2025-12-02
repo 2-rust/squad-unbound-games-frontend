@@ -1,0 +1,357 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fix for sidemenu collapsed functionality - override squad.css rules */
+.sidemenu_collapsed__6CvqR .sidemenu_label__text.sidemenu_label_hidden__xyz {
+  display: none !important;
+}
+
+/* Keep toggle button visible always */
+.sidemenu_toggleButton__y__f8 {
+  display: block !important;
+}
+
+/* Keep circle visible when collapsed */
+.sidemenu_collapsed__6CvqR .sidemenu_button__PBtjJ .sidemenu_circle__o5fCj {
+  display: flex !important;
+}
+
+/* Adjust menu container when collapsed */
+.sidemenu_collapsed__6CvqR .sidemenu_container__awJ5O {
+  width: auto;
+  min-width: 60px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.sidemenu_collapsed__6CvqR .sidemenu_button__PBtjJ {
+  justify-content: center;
+  padding: 8px 5px;
+}
+
+:root {
+  --background: #0e0e16;
+  --foreground: #f5f5f5;
+  --accent-primary: #dd4837;
+  --accent-secondary: #ead351;
+  --card: #1c1c28;
+  --stroke: rgba(255, 255, 255, 0.12);
+  }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--foreground);
+  background: radial-gradient(circle at top, #1d1d2f 0%, #0e0e16 55%);
+  font-family: "Space Grotesk", var(--font-space-grotesk), var(--font-geist-sans),
+    system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
+}
+
+/* Hide all scrollbars but allow scrolling */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Ensure Space Grotesk is applied to all elements */
+* {
+  font-family: "Space Grotesk", var(--font-space-grotesk), var(--font-geist-sans),
+    system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+section {
+  scroll-margin-top: 120px;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Carousel arrow hover effects */
+.carousel_arrow__HHMhv {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.carousel_arrow__HHMhv:hover {
+  opacity: 0.7;
+  transform: scale(1.1);
+}
+
+.carousel_arrow__HHMhv:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Welcome video fade out effect - handled by React state and Tailwind classes */
+
+/* Ensure all text uses Space Grotesk font from squad.css */
+/* Remove any font overrides to match reference site exactly */
+body, main, section, div, p, h1, h2, h3, h4, h5, h6, span, button, a, td, th, table, thead, tbody, tr {
+  font-family: "Space Grotesk", var(--font-space-grotesk), var(--font-geist-sans),
+    system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Override Tailwind base styles to ensure squad.css takes precedence */
+@layer base {
+  * {
+    font-family: "Space Grotesk", var(--font-space-grotesk), var(--font-geist-sans),
+      system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+  }
+}
+
+/* Mobile responsive - Reference: https://squad.unbound.games/ */
+@media (max-width: 768px) {
+  /* Prevent horizontal overflow at root level */
+  html {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+  }
+  
+  body {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    position: relative !important;
+  }
+  
+  /* Adjust padding-top for mobile (header 50px + menu spacing) */
+  body > div > div > div:last-child {
+    padding-top: 140px !important; /* 50px header + 90px menu position */
+  }
+  
+  /* Side menu positioning - creates space below header */
+  .sidemenu_container__awJ5O {
+    top: 90px !important;
+    transform: none !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+  }
+  
+  /* Main container */
+  main {
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+  
+  .index_outer__GPFu3 {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Sections - fit screen width and adjust height */
+  .index_wrapper2__a74H5 {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: auto !important;
+    padding-top: 0 !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+  
+  .index_wrapper3__A9vvd {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: auto !important;
+    padding-top: 0 !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+  
+  section {
+    width: 100% !important;
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+  
+  /* Content containers */
+  .carousel_carousel__PxPRp {
+    max-width: 90vw !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  .carousel_carouselContainer__kIQw9 {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+  
+  .attributeselect_container__rmxCO {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+  
+  /* Fighter display and training containers */
+  .fighterdisplay_wrapper__q5JIV,
+  .training_wrapper__ue0tT {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+  
+  .fighterdisplay_container__rLuu4,
+  .training_container__10ZOQ {
+    max-width: 90vw !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    overflow-x: hidden !important;
+  }
+  
+  /* Images and media - fit container */
+  img, video, iframe {
+    max-width: 100% !important;
+    height: auto !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* All divs - prevent overflow */
+  div {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Text elements - prevent overflow */
+  p, span, h1, h2, h3, h4, h5, h6 {
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    max-width: 100% !important;
+  }
+  
+  /* Buttons and links */
+  button, a {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Forms and inputs */
+  form, input, textarea, select {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* ============================================
+     HEADER - Mobile Responsive (matching reference site)
+     ============================================ */
+  
+  /* Header container - ensure clickability */
+  .nav_navbar__dHFWK {
+    z-index: 10000 !important;
+    position: fixed !important;
+    pointer-events: auto !important;
+  }
+  
+  /* Logo - ensure clickable */
+  .nav_logo__RNJOQ {
+    pointer-events: auto !important;
+    z-index: 10001 !important;
+    position: relative !important;
+  }
+  
+  .nav_logo__RNJOQ a,
+  .nav_logo__RNJOQ a * {
+    pointer-events: auto !important;
+  }
+  
+  /* Navigation right section */
+  .nav_navright__R_2jL {
+    pointer-events: auto !important;
+    z-index: 10001 !important;
+    position: relative !important;
+  }
+  
+  /* Leaderboard link - ensure clickable */
+  .nav_leaderboardLink__Vf6MI {
+    pointer-events: auto !important;
+    z-index: 10002 !important;
+    position: relative !important;
+  }
+  
+  .nav_leaderboardLink__Vf6MI * {
+    pointer-events: auto !important;
+  }
+  
+  /* Wallet buttons - ensure clickable and properly sized */
+  .connectbutton_redConnectButton__SrvWE,
+  .connectbutton_redConnectButtonSmall__GSJ3j,
+  .connectbutton_blackConnectButtonSmall__MDYTu {
+    pointer-events: auto !important;
+    z-index: 10003 !important;
+    position: relative !important;
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: rgba(221, 72, 55, 0.3) !important;
+    cursor: pointer !important;
+    -webkit-user-select: none !important;
+    user-select: none !important;
+  }
+  
+  /* Button children should not block clicks */
+  .connectbutton_redConnectButton__SrvWE *,
+  .connectbutton_redConnectButtonSmall__GSJ3j *,
+  .connectbutton_blackConnectButtonSmall__MDYTu * {
+    pointer-events: none !important;
+  }
+  
+  /* RainbowKit modal - ensure it displays on mobile */
+  [data-rk],
+  [data-rk] > div,
+  div[role="dialog"] {
+    z-index: 99999 !important;
+    position: fixed !important;
+  }
+  
+  div[role="dialog"] {
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+  }
+}
+
+/* Extra small screens - Reference: squad.css @media (max-width: 350px) */
+@media (max-width: 350px) {
+  .nav_navright__R_2jL {
+    gap: 10px !important;
+  }
+}
+
+/* Welcome banner animation */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.welcome-banner {
+  animation: slideDown 0.3s ease-out;
+}
