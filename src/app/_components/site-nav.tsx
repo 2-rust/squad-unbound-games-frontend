@@ -56,7 +56,24 @@ export function SiteNav() {
                 <span className="hidden sm:inline">Leaderboard</span>
               </>
             ) : (
-              <span className="hidden sm:inline">{link.label}</span>
+              <>
+                <div className="nav_trophyIcon__c74LO">
+                  <div
+                    style={{
+                      width: "24px",
+                      height: "24px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "20px",
+                      filter: "brightness(0) saturate(100%)",
+                    }}
+                  >
+                    👤
+                  </div>
+                </div>
+                <span className="hidden sm:inline">{link.label}</span>
+              </>
             )}
           </Link>
         ))}

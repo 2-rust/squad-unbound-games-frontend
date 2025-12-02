@@ -354,4 +354,182 @@ body, main, section, div, p, h1, h2, h3, h4, h5, h6, span, button, a, td, th, ta
 
 .welcome-banner {
   animation: slideDown 0.3s ease-out;
+  position: relative;
+  z-index: 998;
+}
+
+/* ============================================
+   LEADERBOARD - Mobile Responsive
+   ============================================ */
+@media (max-width: 768px) {
+  /* Leaderboard container */
+  .leaderboard_container__yi1Tg {
+    padding: 1rem !important;
+    max-width: 100vw !important;
+    overflow-x: auto !important;
+  }
+
+  /* Leaderboard tabs */
+  .leaderboard_tabs__HF7BZ {
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .leaderboard_mytab__Y2Oml {
+    font-size: 0.85rem !important;
+    padding: 0.5rem 0.75rem !important;
+    white-space: nowrap !important;
+  }
+
+  /* Leaderboard filters */
+  .leaderboard_filter__o7v8T {
+    margin-bottom: 1rem !important;
+  }
+
+  .leaderboard_durationButtons__v__oa {
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+  }
+
+  .leaderboard_durationButton__CpZ0D {
+    font-size: 0.8rem !important;
+    padding: 0.4rem 0.75rem !important;
+  }
+
+  /* Leaderboard podium */
+  .leaderboard_podium__0p1Cr {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 1rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .leaderboard_podiumFirst__jtsoy,
+  .leaderboard_podiumSecond__OWJ96,
+  .leaderboard_podiumThird__6Cmo8 {
+    width: 100% !important;
+    max-width: 200px !important;
+  }
+
+  .leaderboard_podiumImage__YhKr0 {
+    width: 80px !important;
+    height: 80px !important;
+  }
+
+  /* Leaderboard table - horizontal scroll on mobile */
+  .leaderboard_table__E12wC {
+    font-size: 0.8rem !important;
+    display: block !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    width: 100% !important;
+  }
+
+  .leaderboard_table__E12wC thead {
+    display: table-header-group !important;
+  }
+
+  .leaderboard_table__E12wC tbody {
+    display: table-row-group !important;
+  }
+
+  .leaderboard_table__E12wC tr {
+    display: table-row !important;
+  }
+
+  .leaderboard_table__E12wC th,
+  .leaderboard_table__E12wC td {
+    display: table-cell !important;
+    padding: 0.5rem 0.25rem !important;
+    white-space: nowrap !important;
+    font-size: 0.75rem !important;
+  }
+
+  .leaderboard_table__E12wC th {
+    font-size: 0.7rem !important;
+    padding: 0.5rem 0.25rem !important;
+  }
+
+  .leaderboard_fighterImage__RnmbX {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .leaderboard_iconImage__ZoXDI {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .leaderboard_trainer_address__KF5EY {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.5rem !important;
+  }
+
+  .leaderboard_trainer_address__KF5EY img {
+    width: 28px !important;
+    height: 28px !important;
+  }
+}
+
+/* ============================================
+   WELCOME BANNER - Mobile Responsive
+   ============================================ */
+@media (max-width: 768px) {
+  .welcome-banner {
+    padding: 0.75rem 1rem !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.75rem !important;
+  }
+
+  .welcome-banner > div:first-child {
+    width: 100% !important;
+  }
+
+  .welcome-banner > a {
+    width: 100% !important;
+    text-align: center !important;
+    padding: 0.6rem 1rem !important;
+    font-size: 0.85rem !important;
+  }
+}
+
+/* ============================================
+   PROFILE PAGE - Mobile Responsive (additional)
+   ============================================ */
+@media (max-width: 768px) {
+  .profile-page {
+    padding-top: 50px !important;
+  }
+}
+
+/* ============================================
+   MAIN PAGE - Mobile Responsive (additional)
+   ============================================ */
+@media (max-width: 768px) {
+  /* Welcome banner spacing */
+  main:has(.welcome-banner) {
+    padding-top: 0 !important;
+  }
+
+  /* Carousel improvements */
+  .carousel_cards__pPGpU {
+    gap: 0.5rem !important;
+  }
+
+  .carousel_card__AIxvR {
+    min-width: 280px !important;
+  }
+
+  /* Training method cards */
+  .training_methodCard__xY3qK {
+    min-width: 200px !important;
+  }
+
+  /* Attribute cards */
+  .attributeselect_card__K8vqH {
+    min-width: 150px !important;
+  }
 }

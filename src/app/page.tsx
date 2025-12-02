@@ -1046,6 +1046,7 @@ export default function Home() {
             justifyContent: "space-between",
             gap: "1rem",
             animation: "slideDown 0.3s ease-out",
+            paddingTop: "30px",
           }}
           className="welcome-banner"
         >

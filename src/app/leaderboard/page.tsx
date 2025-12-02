@@ -542,8 +542,8 @@ export default function LeaderboardPage() {
                 
                 return (
                 <tr key={`${row.tokenId}-${activeTime}`}>
-                    <td className="leaderboard_myrank__oPeYH">{row.rank}</td>
-                    <td>
+                    <td className="leaderboard_myrank__oPeYH" data-label="Rank">{row.rank}</td>
+                    <td data-label="">
                       <a
                         href={openseaUrl}
                         target="_blank"
@@ -563,9 +563,9 @@ export default function LeaderboardPage() {
                         />
                       </a>
                     </td>
-                    <td>{numericTokenId}</td>
-                  <td>{row.name}</td>
-                  <td>
+                    <td data-label="Token ID">{numericTokenId}</td>
+                  <td data-label="Fighter Name">{row.name}</td>
+                  <td data-label="Endurance">
                     {row.endurance}
                     {row.enduranceDelta && (
                       <span className={row.enduranceDelta !== "+0" && parseFloat(row.enduranceDelta) > 0 ? "leaderboard_greenDelta__TDX6Z" : ""}>
@@ -573,7 +573,7 @@ export default function LeaderboardPage() {
                       </span>
                     )}
                   </td>
-                  <td>
+                  <td data-label="Agility">
                     {row.agility}
                     {row.agilityDelta && (
                       <span className={row.agilityDelta !== "+0" && parseFloat(row.agilityDelta) > 0 ? "leaderboard_greenDelta__TDX6Z" : ""}>
@@ -581,7 +581,7 @@ export default function LeaderboardPage() {
                       </span>
                     )}
                   </td>
-                  <td>
+                  <td data-label="Mental">
                     {row.mental}
                     {row.mentalDelta && (
                       <span className={row.mentalDelta !== "+0" && parseFloat(row.mentalDelta) > 0 ? "leaderboard_greenDelta__TDX6Z" : ""}>
@@ -589,7 +589,7 @@ export default function LeaderboardPage() {
                       </span>
                     )}
                   </td>
-                  <td>
+                  <td data-label="Leadership">
                     {row.leadership}
                     {row.leadershipDelta && (
                       <span className={row.leadershipDelta !== "+0" && parseFloat(row.leadershipDelta) > 0 ? "leaderboard_greenDelta__TDX6Z" : ""}>
@@ -597,8 +597,8 @@ export default function LeaderboardPage() {
                       </span>
                     )}
                   </td>
-                  <td>{row.distance}</td>
-                    <td>
+                  <td data-label="Distance">{row.distance}</td>
+                    <td data-label="Buy">
                       <a
                         href={mintifyUrl}
                         target="_blank"
@@ -647,8 +647,8 @@ export default function LeaderboardPage() {
                 
                 return (
                 <tr key={`${row.trainer}-${activeTime}`}>
-                    <td>{rankDisplay}</td>
-                    <td className="leaderboard_trainer_address__KF5EY">
+                    <td data-label="Rank">{rankDisplay}</td>
+                    <td className="leaderboard_trainer_address__KF5EY" data-label="Trainer">
                       <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
                         {displayAvatar && (
                           <img
@@ -666,13 +666,13 @@ export default function LeaderboardPage() {
                         <span>{displayName}</span>
                       </div>
                     </td>
-                    <td className="leaderboard_totalProgress__f_jyN">{row.totalProgress}</td>
-                  <td>{row.endurance}</td>
-                  <td>{row.agility}</td>
-                  <td>{row.mental}</td>
-                  <td>{row.leadership}</td>
-                  <td>{row.distance}</td>
-                    <td>{row.fightersTrained}</td>
+                    <td className="leaderboard_totalProgress__f_jyN" data-label="Total Progress">{row.totalProgress}</td>
+                  <td data-label="Endurance">{row.endurance}</td>
+                  <td data-label="Agility">{row.agility}</td>
+                  <td data-label="Mental">{row.mental}</td>
+                  <td data-label="Leadership">{row.leadership}</td>
+                  <td data-label="Distance">{row.distance}</td>
+                    <td data-label="Fighters Trained">{row.fightersTrained}</td>
                 </tr>
                 );
               })}
@@ -688,8 +688,8 @@ export default function LeaderboardPage() {
                 
                 return (
                   <tr key={`${row.walletAddress}-${activeTime}`}>
-                    <td>{rankDisplay}</td>
-                    <td className="leaderboard_trainer_address__KF5EY">
+                    <td data-label="Rank">{rankDisplay}</td>
+                    <td className="leaderboard_trainer_address__KF5EY" data-label="Wallet Address">
                       <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
                         {displayAvatar && (
                           <img
@@ -707,9 +707,9 @@ export default function LeaderboardPage() {
                         <span>{displayName}</span>
                       </div>
                     </td>
-                    <td>{row.totalDistance}</td>
-                    <td className={row.yogaSessions > 0 ? "leaderboard_greenDelta__TDX6Z" : ""}>{row.yogaSessions}</td>
-                    <td className={row.meditationSessions > 0 ? "leaderboard_greenDelta__TDX6Z" : ""}>{row.meditationSessions}</td>
+                    <td data-label="Total Distance">{row.totalDistance}</td>
+                    <td data-label="Yoga Sessions" className={row.yogaSessions > 0 ? "leaderboard_greenDelta__TDX6Z" : ""}>{row.yogaSessions}</td>
+                    <td data-label="Meditation Sessions" className={row.meditationSessions > 0 ? "leaderboard_greenDelta__TDX6Z" : ""}>{row.meditationSessions}</td>
                 </tr>
                 );
               })}

@@ -6,6 +6,10 @@ import { useAccount } from "wagmi";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import Image from "next/image";
 import Link from "next/link";
+import { COLORS, SPACING, BREAKPOINTS, HEADER_HEIGHT, BORDER_RADIUS, TRANSITIONS, FONT_SIZES } from "@/constants/ui";
+
+const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+const MAX_USERNAME_LENGTH = 30;
 
 export default function ProfilePage() {
   const { address, isConnected } = useAccount();
@@ -45,8 +49,8 @@ export default function ProfilePage() {
       return;
     }
 
-    // Validate file size (max 2MB)
-    if (file.size > 2 * 1024 * 1024) {
+    // Validate file size
+    if (file.size > MAX_FILE_SIZE) {
       setSaveMessage("Image size must be less than 2MB");
       setTimeout(() => setSaveMessage(null), 3000);
       return;
@@ -111,10 +115,10 @@ export default function ProfilePage() {
 
   if (isLoading) {
     return (
-      <main style={{ backgroundColor: "#202020", color: "white", minHeight: "100vh" }}>
-        <div className="index_wrapper__epjO8" style={{ padding: "4rem 2rem" }}>
-          <div style={{ textAlign: "center" }}>
-            <div className="spinner" style={{ margin: "0 auto 1rem" }}></div>
+      <main className="profile-page">
+        <div className="profile-container">
+          <div className="profile-loading">
+            <div className="spinner" />
             <p>Loading profile...</p>
           </div>
         </div>
@@ -127,236 +131,355 @@ export default function ProfilePage() {
   }
 
   return (
-    <main style={{ backgroundColor: "#202020", color: "white", minHeight: "100vh" }}>
-      <div className="index_wrapper__epjO8" style={{ padding: "4rem 2rem", maxWidth: "600px", margin: "0 auto" }}>
-        <div style={{ marginBottom: "2rem", textAlign: "center" }}>
-          <Link href="/" style={{ display: "inline-block", marginBottom: "1rem" }}>
-            <Image
-              src="/assets/logo.png"
-              alt="Fighters Unbound"
-              width={120}
-              height={120}
-              priority
-            />
-          </Link>
-          <h1 style={{ fontSize: "2rem", marginBottom: "0.5rem", fontWeight: "bold" }}>
-            Profile Settings
-          </h1>
-          <p style={{ color: "#999", fontSize: "0.9rem" }}>
-            Customize your username and avatar
-          </p>
-        </div>
+    <>
+      <main className="profile-page">
+        <div className="profile-container">
+          <div className="profile-header">
+            <Link href="/" className="profile-logo-link">
+              <Image
+                src="/assets/logo.png"
+                alt="Fighters Unbound"
+                width={150}
+                height={150}
+                priority
+                className="profile-logo"
+              />
+            </Link>
+            <h1 className="profile-title">Profile Settings</h1>
+            <p className="profile-subtitle">Customize your username and avatar</p>
+          </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-          {/* Avatar Section */}
-          <div>
-            <label style={{ display: "block", marginBottom: "1rem", fontSize: "1.1rem", fontWeight: "500" }}>
-              Avatar
-            </label>
-            <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
-              <div
-                style={{
-                  width: "120px",
-                  height: "120px",
-                  borderRadius: "50%",
-                  overflow: "hidden",
-                  border: "3px solid #333",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: "#2a2a2a",
-                  position: "relative",
-                }}
-              >
-                {isUploading ? (
-                  <div className="spinner" style={{ width: "40px", height: "40px" }}></div>
-                ) : avatarPreview ? (
-                  <img
-                    src={avatarPreview}
-                    alt="Avatar preview"
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          <div className="profile-content">
+            {/* Avatar Section */}
+            <div className="profile-section">
+              <div className="avatar-container">
+                <div className="avatar-preview">
+                  {isUploading ? (
+                    <div className="spinner avatar-spinner" />
+                  ) : avatarPreview ? (
+                    <img
+                      src={avatarPreview}
+                      alt="Avatar preview"
+                      className="avatar-image"
+                    />
+                  ) : (
+                    <div className="avatar-placeholder">👤</div>
+                  )}
+                </div>
+                <div className="avatar-controls">
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileSelect}
+                    className="avatar-input"
                   />
-                ) : (
-                  <div style={{ fontSize: "3rem" }}>👤</div>
-                )}
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", flex: 1 }}>
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileSelect}
-                  style={{ display: "none" }}
-                />
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  disabled={isUploading}
-                  style={{
-                    padding: "0.75rem 1.5rem",
-                    backgroundColor: "#d34836",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "8px",
-                    cursor: isUploading ? "not-allowed" : "pointer",
-                    fontSize: "0.9rem",
-                    fontWeight: "500",
-                    opacity: isUploading ? 0.6 : 1,
-                    transition: "opacity 0.2s",
-                  }}
-                >
-                  {isUploading ? "Uploading..." : "Upload Avatar"}
-                </button>
-                {avatarPreview && (
                   <button
                     type="button"
-                    onClick={handleRemoveAvatar}
-                    style={{
-                      padding: "0.5rem 1rem",
-                      backgroundColor: "transparent",
-                      color: "#999",
-                      border: "1px solid #444",
-                      borderRadius: "6px",
-                      cursor: "pointer",
-                      fontSize: "0.85rem",
-                    }}
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={isUploading}
+                    className="btn btn-primary btn-upload"
                   >
-                    Remove Avatar
+                    {isUploading ? "Uploading..." : "Upload Avatar"}
                   </button>
-                )}
+                  {avatarPreview && (
+                    <button
+                      type="button"
+                      onClick={handleRemoveAvatar}
+                      className="btn btn-secondary btn-remove"
+                    >
+                      Remove Avatar
+                    </button>
+                  )}
+                </div>
+              </div>
+              <p className="profile-hint">Recommended: Square image, max 2MB</p>
+            </div>
+
+            {/* Username Section */}
+            <div className="profile-section">
+              <label htmlFor="username" className="profile-label">
+                Username (Optional)
+              </label>
+              <input
+                id="username"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Enter your username"
+                maxLength={MAX_USERNAME_LENGTH}
+                className="profile-input"
+              />
+              <p className="profile-hint">Leave empty to use wallet address</p>
+            </div>
+
+            {/* Wallet Address Display */}
+            <div className="profile-section">
+              <label className="profile-label">Wallet Address</label>
+              <div className="profile-address">
+                {address}
               </div>
             </div>
-            <p style={{ marginTop: "0.5rem", fontSize: "0.85rem", color: "#999" }}>
-              Recommended: Square image, max 2MB
-            </p>
-          </div>
 
-          {/* Username Section */}
-          <div>
-            <label
-              htmlFor="username"
-              style={{ display: "block", marginBottom: "0.75rem", fontSize: "1.1rem", fontWeight: "500" }}
-            >
-              Username (Optional)
-            </label>
-            <input
-              id="username"
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter your username"
-              maxLength={30}
-              style={{
-                width: "100%",
-                padding: "0.875rem 1rem",
-                backgroundColor: "#2a2a2a",
-                border: "2px solid #444",
-                borderRadius: "8px",
-                color: "white",
-                fontSize: "1rem",
-                outline: "none",
-                transition: "border-color 0.2s",
-              }}
-              onFocus={(e) => (e.target.style.borderColor = "#d34836")}
-              onBlur={(e) => (e.target.style.borderColor = "#444")}
-            />
-            <p style={{ marginTop: "0.5rem", fontSize: "0.85rem", color: "#999" }}>
-              Leave empty to use wallet address
-            </p>
-          </div>
+            {/* Save Message */}
+            {saveMessage && (
+              <div className={`profile-message ${saveMessage.includes("success") ? "success" : "error"}`}>
+                {saveMessage}
+              </div>
+            )}
 
-          {/* Wallet Address Display */}
-          <div>
-            <label style={{ display: "block", marginBottom: "0.75rem", fontSize: "1.1rem", fontWeight: "500" }}>
-              Wallet Address
-            </label>
-            <div
-              style={{
-                padding: "0.875rem 1rem",
-                backgroundColor: "#2a2a2a",
-                border: "2px solid #444",
-                borderRadius: "8px",
-                color: "#999",
-                fontSize: "0.9rem",
-                fontFamily: "monospace",
-                wordBreak: "break-all",
-              }}
-            >
-              {address}
+            {/* Action Buttons */}
+            <div className="profile-actions">
+              <button
+                type="button"
+                onClick={() => router.push("/")}
+                className="btn btn-outline btn-cancel"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleSave}
+                disabled={isSaving}
+                className="btn btn-primary btn-save"
+              >
+                {isSaving ? "Saving..." : "Save Profile"}
+              </button>
             </div>
-          </div>
-
-          {/* Save Message */}
-          {saveMessage && (
-            <div
-              style={{
-                padding: "1rem",
-                borderRadius: "8px",
-                backgroundColor: saveMessage.includes("success") ? "#1a4d1a" : "#4d1a1a",
-                color: "white",
-                textAlign: "center",
-                animation: "fadeIn 0.3s ease-in",
-              }}
-            >
-              {saveMessage}
-            </div>
-          )}
-
-          {/* Action Buttons */}
-          <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
-            <button
-              type="button"
-              onClick={() => router.push("/")}
-              style={{
-                flex: 1,
-                padding: "1rem",
-                backgroundColor: "transparent",
-                color: "white",
-                border: "2px solid #444",
-                borderRadius: "8px",
-                cursor: "pointer",
-                fontSize: "1rem",
-                fontWeight: "500",
-                transition: "border-color 0.2s",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#666")}
-              onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#444")}
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              onClick={handleSave}
-              disabled={isSaving}
-              style={{
-                flex: 1,
-                padding: "1rem",
-                backgroundColor: "#d34836",
-                color: "white",
-                border: "none",
-                borderRadius: "8px",
-                cursor: isSaving ? "not-allowed" : "pointer",
-                fontSize: "1rem",
-                fontWeight: "500",
-                opacity: isSaving ? 0.6 : 1,
-                transition: "opacity 0.2s, transform 0.1s",
-              }}
-              onMouseEnter={(e) => {
-                if (!isSaving) {
-                  e.currentTarget.style.transform = "scale(1.02)";
-                }
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "scale(1)";
-              }}
-            >
-              {isSaving ? "Saving..." : "Save Profile"}
-            </button>
           </div>
         </div>
-      </div>
+      </main>
 
       <style jsx>{`
+        .profile-page {
+          background-color: ${COLORS.background.primary};
+          color: ${COLORS.text.primary};
+          min-height: 100vh;
+          padding-top: ${HEADER_HEIGHT.desktop}px;
+        }
+
+        .profile-container {
+          padding: ${SPACING["3xl"]} ${SPACING["2xl"]};
+          max-width: 600px;
+          margin: 0 auto;
+        }
+
+        .profile-loading {
+          text-align: center;
+        }
+
+        .profile-header {
+          margin-bottom: ${SPACING["2xl"]};
+          text-align: center;
+          display: grid;
+          grid-template-columns: 1fr;
+          justify-items: center;
+        }
+
+        .profile-logo-link {
+          justify-self: center;
+          margin-bottom: ${SPACING.xl};
+        }
+
+        .profile-logo {
+          filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+          image-rendering: crisp-edges;
+        }
+
+        .profile-title {
+          font-size: ${FONT_SIZES["2xl"]};
+          margin-bottom: ${SPACING.sm};
+          font-weight: bold;
+        }
+
+        .profile-subtitle {
+          color: ${COLORS.text.secondary};
+          font-size: ${FONT_SIZES.base};
+        }
+
+        .profile-content {
+          display: flex;
+          flex-direction: column;
+          gap: ${SPACING.xl};
+        }
+
+        .profile-section {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .avatar-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: ${SPACING.xl};
+          margin-bottom: ${SPACING.md};
+        }
+
+        .avatar-preview {
+          width: 120px;
+          height: 120px;
+          border-radius: ${BORDER_RADIUS.full};
+          overflow: hidden;
+          border: 3px solid ${COLORS.border.default};
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: ${COLORS.background.secondary};
+          position: relative;
+          flex-shrink: 0;
+        }
+
+        .avatar-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .avatar-placeholder {
+          font-size: 3rem;
+        }
+
+        .avatar-spinner {
+          width: 40px;
+          height: 40px;
+        }
+
+        .avatar-controls {
+          display: flex;
+          flex-direction: column;
+          gap: ${SPACING.md};
+          flex: 1;
+        }
+
+        .avatar-input {
+          display: none;
+        }
+
+        .profile-label {
+          display: block;
+          margin-bottom: ${SPACING.md};
+          font-size: ${FONT_SIZES.lg};
+          font-weight: 500;
+        }
+
+        .profile-input {
+          width: 100%;
+          padding: ${SPACING.md} ${SPACING.lg};
+          background-color: ${COLORS.background.secondary};
+          border: 2px solid ${COLORS.border.light};
+          border-radius: ${BORDER_RADIUS.md};
+          color: ${COLORS.text.primary};
+          font-size: ${FONT_SIZES.md};
+          outline: none;
+          transition: border-color ${TRANSITIONS.normal};
+        }
+
+        .profile-input:focus {
+          border-color: ${COLORS.accent.primary};
+        }
+
+        .profile-address {
+          padding: ${SPACING.md} ${SPACING.lg};
+          background-color: ${COLORS.background.secondary};
+          border: 2px solid ${COLORS.border.light};
+          border-radius: ${BORDER_RADIUS.md};
+          color: ${COLORS.text.secondary};
+          font-size: ${FONT_SIZES.base};
+          font-family: monospace;
+          word-break: break-all;
+        }
+
+        .profile-hint {
+          margin-top: ${SPACING.md};
+          font-size: ${FONT_SIZES.sm};
+          color: ${COLORS.text.secondary};
+        }
+
+        .profile-message {
+          padding: ${SPACING.lg};
+          border-radius: ${BORDER_RADIUS.md};
+          color: ${COLORS.text.primary};
+          text-align: center;
+          animation: fadeIn ${TRANSITIONS.slow} ease-in;
+          margin-top: ${SPACING.sm};
+        }
+
+        .profile-message.success {
+          background-color: ${COLORS.status.success};
+        }
+
+        .profile-message.error {
+          background-color: ${COLORS.status.error};
+        }
+
+        .profile-actions {
+          display: flex;
+          gap: ${SPACING.lg};
+          margin-top: ${SPACING.sm};
+        }
+
+        .btn {
+          flex: 1;
+          padding: ${SPACING.lg};
+          border-radius: ${BORDER_RADIUS.md};
+          font-size: ${FONT_SIZES.md};
+          font-weight: 500;
+          cursor: pointer;
+          transition: all ${TRANSITIONS.normal};
+          border: none;
+        }
+
+        .btn-primary {
+          background-color: ${COLORS.accent.primary};
+          color: ${COLORS.text.primary};
+        }
+
+        .btn-primary:hover:not(:disabled) {
+          transform: scale(1.02);
+          opacity: 0.9;
+        }
+
+        .btn-primary:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+
+        .btn-secondary {
+          padding: ${SPACING.sm} ${SPACING.lg};
+          background-color: transparent;
+          color: ${COLORS.text.secondary};
+          border: 1px solid ${COLORS.border.light};
+          font-size: ${FONT_SIZES.sm};
+        }
+
+        .btn-secondary:hover {
+          border-color: ${COLORS.border.default};
+        }
+
+        .btn-outline {
+          background-color: transparent;
+          color: ${COLORS.text.primary};
+          border: 2px solid ${COLORS.border.light};
+        }
+
+        .btn-outline:hover {
+          border-color: ${COLORS.border.default};
+        }
+
+        .btn-upload {
+          padding: ${SPACING.md} ${SPACING.xl};
+        }
+
+        .spinner {
+          border: 3px solid ${COLORS.border.default};
+          border-top: 3px solid ${COLORS.accent.primary};
+          border-radius: ${BORDER_RADIUS.full};
+          width: 40px;
+          height: 40px;
+          animation: spin 1s linear infinite;
+        }
+
         @keyframes fadeIn {
           from {
             opacity: 0;
@@ -368,15 +491,6 @@ export default function ProfilePage() {
           }
         }
 
-        .spinner {
-          border: 3px solid #333;
-          border-top: 3px solid #d34836;
-          border-radius: 50%;
-          width: 40px;
-          height: 40px;
-          animation: spin 1s linear infinite;
-        }
-
         @keyframes spin {
           0% {
             transform: rotate(0deg);
@@ -385,8 +499,61 @@ export default function ProfilePage() {
             transform: rotate(360deg);
           }
         }
+
+        /* Mobile Responsive */
+        @media (max-width: ${BREAKPOINTS.mobile}) {
+          .profile-page {
+            padding-top: ${HEADER_HEIGHT.mobile}px;
+          }
+
+          .profile-container {
+            padding: ${SPACING["2xl"]} ${SPACING.lg};
+          }
+
+          .profile-logo {
+            width: 120px;
+            height: 120px;
+          }
+
+          .profile-title {
+            font-size: ${FONT_SIZES.xl};
+          }
+
+          .avatar-container {
+            flex-direction: column;
+            align-items: center;
+            gap: ${SPACING.lg};
+          }
+
+          .avatar-preview {
+            width: 100px;
+            height: 100px;
+          }
+
+          .avatar-controls {
+            width: 100%;
+          }
+
+          .profile-actions {
+            flex-direction: column;
+          }
+
+          .btn {
+            width: 100%;
+          }
+        }
+
+        @media (max-width: ${BREAKPOINTS.smallMobile}) {
+          .profile-container {
+            padding: ${SPACING.xl} ${SPACING.md};
+          }
+
+          .profile-logo {
+            width: 100px;
+            height: 100px;
+          }
+        }
       `}</style>
-    </main>
+    </>
   );
 }
-

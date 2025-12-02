@@ -29,6 +29,18 @@ export const metadata: Metadata = {
   title: "Squad Unbound MVP",
   description:
     "Minimal Next.js recreation of squad.unbound.games for showcasing the fighter flow.",
+  icons: {
+    icon: "/assets/sitelogo.png",
+    shortcut: "/assets/sitelogo.png",
+    apple: "/assets/sitelogo.png",
+  },
+  openGraph: {
+    images: ["/assets/sitelogo.png"],
+  },
+  twitter: {
+    card: "summary",
+    images: ["/assets/sitelogo.png"],
+  },
 };
 
 export default function RootLayout({
