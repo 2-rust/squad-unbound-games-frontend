@@ -192,6 +192,11 @@ function HomeContent() {
   );
   const [selectedMethod, setSelectedMethod] = useState("strava");
   
+  // Get the app URL from environment variable or use current origin
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 
+    (typeof window !== "undefined" ? window.location.origin : "https://squad-unbound-games.vercel.app");
+  const stravaRedirectUri = `${appUrl}/authorize`;
+  
   // Check for Hellraiser NFTs from connected wallet
   const { 
     hellraiserNFTs, 
@@ -1426,7 +1431,7 @@ function HomeContent() {
                 <div className="strava_container__qvP8U">
                   <div className="strava_info__4tOFg">Step 2.Connect with Strava to start training (Check Both Boxes ✅)</div>
                   <a
-                    href="https://www.strava.com/oauth/authorize?client_id=151081&response_type=code&redirect_uri=http://localhost:3000/authorize&approval_prompt=force&scope=read,activity:read_all"
+                    href={`https://www.strava.com/oauth/authorize?client_id=151081&response_type=code&redirect_uri=${encodeURIComponent(stravaRedirectUri)}&approval_prompt=force&scope=read,activity:read_all`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
