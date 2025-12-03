@@ -3,7 +3,7 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, Suspense } from "react";
 import { useAccount } from "wagmi";
 import { useSearchParams } from "next/navigation";
 import { useHellraiserNFTs } from "@/hooks/useHellraiserNFTs";
@@ -185,7 +185,7 @@ const getSideMenu = (isHellraiser: boolean, trainingMethod?: string) => [
   { id: "fourth-section", label: trainingMethod === "strava" ? "Sync Strava" : trainingMethod === "meditation" ? "Meditation Training" : "Yoga Training" },
 ] as const;
 
-export default function Home() {
+function HomeContent() {
   const [activeCard, setActiveCard] = useState(0);
   const [selectedAttribute] = useState(
     attributeOptions[0].id,
@@ -1906,5 +1906,17 @@ export default function Home() {
         )}
       </div>
     </main>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={
+      <main style={{ backgroundColor: "#202020", color: "white", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <div>Loading...</div>
+      </main>
+    }>
+      <HomeContent />
+    </Suspense>
   );
 }
