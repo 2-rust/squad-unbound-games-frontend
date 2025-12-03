@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
     
     // Get the actual RPC URL from environment or use default
     // Remove trailing slash if present
-    let rpcUrl = (process.env.NEXT_PUBLIC_SHAPE_RPC_URL || "https://mainnet.shape.network").replace(/\/$/, "");
+    const rpcUrl = (process.env.NEXT_PUBLIC_SHAPE_RPC_URL || "https://mainnet.shape.network").replace(/\/$/, "");
     
     // Log the RPC URL being used (for debugging)
     if (process.env.NODE_ENV === "development") {

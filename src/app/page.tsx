@@ -28,26 +28,6 @@ type TrainingMethod = {
 
 const fighterCards = [
   {
-    id: "#000",
-    name: "Empty",
-    creator: "You do not hold any NFT",
-    level: "--",
-    rarity: "Inactive",
-    boost: "—",
-    image: "/assets/defaultnft.png",
-    isOwned: false,
-  },
-  {
-    id: "#018",
-    name: "Kaia Runedawn",
-    creator: "Fighters Unbound",
-    level: "18",
-    rarity: "Mythic",
-    boost: "Endurance +12",
-    image: "/assets/defaultnft.png",
-    isOwned: true,
-  },
-  {
     id: "#041",
     name: "Rex Vanguard",
     creator: "Fighters Unbound",
@@ -182,21 +162,6 @@ const trainingMethods: TrainingMethod[] = [
   },
 ];
 
-const stravaChecklist = [
-  {
-    title: "Connect wallet",
-    detail: "Signature ensures XP goes to the right fighter.",
-  },
-  {
-    title: "Authorize Strava",
-    detail: "We only request activity metadata required for XP.",
-  },
-  {
-    title: "Pick an attribute",
-    detail: "Runs automatically map to the selected stat.",
-  },
-];
-
 const syncSteps = [
   { title: "Warm-up logged", detail: "3.2 km tempo run" },
   { title: "Cooldown logged", detail: "0.8 km jog" },
@@ -228,7 +193,7 @@ const getSideMenu = (isHellraiser: boolean, trainingMethod?: string) => [
 
 export default function Home() {
   const [activeCard, setActiveCard] = useState(0);
-  const [selectedAttribute, setSelectedAttribute] = useState(
+  const [selectedAttribute] = useState(
     attributeOptions[0].id,
   );
   const [selectedMethod, setSelectedMethod] = useState("strava");
@@ -263,7 +228,7 @@ export default function Home() {
         console.log(`      Level: ${nft.level}`);
         console.log(`      Rarity: ${nft.rarity}`);
         console.log(`      Boost: ${nft.boost}`);
-        console.log(`      Description: ${nft.description || "N/A"}`);
+      console.log(`🎫 Numeric Token IDs:`, tokenIds.map(id => parseInt(id, 10)));
         console.log(`      Is Owned: ${nft.isOwned}`);
         
         // Log attributes
@@ -316,6 +281,7 @@ export default function Home() {
   const [selectedCourse, setSelectedCourse] = useState<number | null>(null);
   const [videoTimer, setVideoTimer] = useState<number | null>(null);
   const [isVideoPaused, setIsVideoPaused] = useState(false);
+  const [hasActiveFighter, setHasActiveFighter] = useState(false);
   const { isConnected, address } = useAccount();
   const walletConnected = Boolean(isConnected);
   const searchParams = useSearchParams();
@@ -478,7 +444,6 @@ export default function Home() {
       }}
     </ConnectButton.Custom>
   );
-  const [hasActiveFighter, setHasActiveFighter] = useState(false);
 
   // Use Hellraiser NFTs if available, otherwise use default fighter cards
   // Reference: squad.unbound.games-noNFT.html - when wallet connected but no NFTs
@@ -536,10 +501,6 @@ export default function Home() {
     return 0;
   }, [hasHellraiserNFTs, hellraiserBalance, hellraiserNFTs]);
   
-  // Check if any NFTs are being displayed
-  const hasAnyNFTs = useMemo(() => {
-    return hellraiserNFTs.length > 0;
-  }, [hellraiserNFTs]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -983,9 +944,11 @@ export default function Home() {
     return (
       <main style={{ backgroundColor: "#202020", color: "white", minHeight: "100vh" }}>
         <div className="index_wrapper__epjO8">
-          <img
+          <Image
             src="/assets/logo.png"
             alt="Fighters Unbound logo"
+            width={200}
+            height={200}
           />
           
           {/* Welcome Video - Center Section */}
@@ -1140,7 +1103,7 @@ export default function Home() {
         <section id="first-section" className="index_wrapper2__a74H5">
           <div>
             <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-              <img width="200px" src="/assets/logo.png" alt={hasHellraiserNFTs ? "Hellraiser NFT" : "Fighters Unbound logo"} />
+              <Image width={200} height={200} src="/assets/logo.png" alt={hasHellraiserNFTs ? "Hellraiser NFT" : "Fighters Unbound logo"} />
             </div>
             {isLoadingHellraiser ? (
               <div className="carousel_counttext__HSuku">Loading NFTs...</div>
@@ -1175,7 +1138,7 @@ export default function Home() {
             {!isLoadingHellraiser && (
               <div className="carousel_secondary_button__vD1B9">
                 <a href="https://mintify.xyz/launchpad/fightersunbound" target="_blank" rel="noopener noreferrer">
-                  <img className="carousel_mintIcon__NuCvr" src="/assets/mintify.jpeg" alt="Mintify" />
+                  <Image className="carousel_mintIcon__NuCvr" src="/assets/mintify.jpeg" alt="Mintify" width={24} height={24} />
                   Buy Fighters
                 </a>
               </div>
@@ -1304,7 +1267,7 @@ export default function Home() {
 
         <section id="second-section" className="index_wrapper2__a74H5">
           <div className="attributeselect_container__rmxCO">
-            <img width="200px" src="/assets/logo.png" alt="Training logo" />
+            <Image width={200} height={200} src="/assets/logo.png" alt="Training logo" />
             <h1 className="attributeselect_title__HzU4F">Select Training Method</h1>
             <p className="attributeselect_subtitle__TGHPj">
               Please select from the three training options
@@ -1482,7 +1445,7 @@ export default function Home() {
                     />
                   </a>
                 </div>
-                <div className="fighterdisplay_squaretext__xkfDf">Strava linked to @dillon_marszalek! You're ready for training</div>
+                <div className="fighterdisplay_squaretext__xkfDf">Strava linked to @dillon_marszalek! You&apos;re ready for training</div>
               </div>
               <div className="fighterdisplay_imageBarRight__h36Ad"></div>
             </div>
