@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
-export default function AuthorizePage() {
+function AuthorizeContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -55,6 +55,27 @@ export default function AuthorizePage() {
         <p>Please wait while we complete the authorization.</p>
       </div>
     </div>
+  );
+}
+
+export default function AuthorizePage() {
+  return (
+    <Suspense fallback={
+      <div style={{ 
+        display: "flex", 
+        justifyContent: "center", 
+        alignItems: "center", 
+        minHeight: "100vh",
+        backgroundColor: "#202020",
+        color: "white"
+      }}>
+        <div style={{ textAlign: "center" }}>
+          <h1>Loading...</h1>
+        </div>
+      </div>
+    }>
+      <AuthorizeContent />
+    </Suspense>
   );
 }
 
