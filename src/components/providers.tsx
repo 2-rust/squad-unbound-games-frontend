@@ -33,35 +33,49 @@ if (projectId === "00000000000000000000000000000000" && typeof window !== "undef
   
   // Suppress Web3Modal API errors when using placeholder project ID
   // This is expected behavior - Web3Modal will fall back to alternative methods
-  if (typeof window !== "undefined") {
-    const originalFetch = window.fetch;
-    window.fetch = async (...args) => {
-      const url = args[0]?.toString() || "";
-      // Suppress errors from Web3Modal config API when using placeholder ID
-      if (url.includes("api.web3modal.org") && url.includes("00000000000000000000000000000000")) {
-        try {
-          const response = await originalFetch(...args);
-          // If the response is not ok, return a successful mock response
-          if (!response.ok) {
-            console.debug("Web3Modal config request failed (expected with placeholder project ID)");
-            return new Response(JSON.stringify({}), {
-              status: 200,
-              headers: { "Content-Type": "application/json" },
-            });
-          }
-          return response;
-        } catch (error) {
-          // Silently handle Web3Modal config errors with placeholder ID
-          console.debug("Web3Modal config request error (expected with placeholder project ID)");
+  const originalFetch = window.fetch;
+  window.fetch = async (...args) => {
+    // Extract URL from Request, URL, or string
+    let url = "";
+    if (typeof args[0] === "string") {
+      url = args[0];
+    } else if (args[0] instanceof URL) {
+      url = args[0].toString();
+    } else if (args[0] instanceof Request) {
+      url = args[0].url;
+    }
+    
+    // Suppress errors from Web3Modal config API when using placeholder ID
+    if (url.includes("api.web3modal.org") && (url.includes("00000000000000000000000000000000") || url.includes("appkit/v1/config"))) {
+      try {
+        const response = await originalFetch(...args);
+        // If the response is not ok, return a successful mock response
+        if (!response.ok) {
+          // Silently handle - this is expected with placeholder project ID
           return new Response(JSON.stringify({}), {
             status: 200,
-            headers: { "Content-Type": "application/json" },
+            statusText: "OK",
+            headers: { 
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
           });
         }
+        return response;
+      } catch (error) {
+        // Silently handle Web3Modal config errors with placeholder ID
+        return new Response(JSON.stringify({}), {
+          status: 200,
+          statusText: "OK",
+          headers: { 
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        });
       }
-      return originalFetch(...args);
-    };
-  }
+    }
+    return originalFetch(...args);
+  };
 }
 
 // Create wagmi config with Shape Network included
