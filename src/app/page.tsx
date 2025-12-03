@@ -1597,7 +1597,9 @@ function HomeContent() {
                 <div className="training_background__6Eue6">
                   <div className="training_container__10ZOQ">
                     <div className="training_title__rrq5E">🧘‍♂️ Meditation Training Progress</div>
-                    <div className="training_countdown__qtVUh">Training Cycle #8 Ends In 29d 3h 9m 53s</div>
+                    <div className="training_countdown__qtVUh">
+                      Training Cycle #8 Ends In {countdown.days}d {countdown.hours}h {countdown.minutes}m {countdown.seconds}s
+                    </div>
                     <div className="training_section__B2pSK">
                       <h3 className="training_sectionTitle__uwUa1">📚 Select Your Meditation Course:</h3>
                       <div className="training_courseGrid__1HYAd">
@@ -1687,7 +1689,9 @@ function HomeContent() {
                 <div className="training_background__6Eue6">
                   <div className="training_container__10ZOQ">
                     <div className="training_title__rrq5E">🧘‍♀️ Yoga Training Progress</div>
-                    <div className="training_countdown__qtVUh">Training Cycle #8 Ends In 29d 3h 9m 53s</div>
+                    <div className="training_countdown__qtVUh">
+                      Training Cycle #8 Ends In {countdown.days}d {countdown.hours}h {countdown.minutes}m {countdown.seconds}s
+                    </div>
                     <div className="training_section__B2pSK">
                       <h3 className="training_sectionTitle__uwUa1">📚 Select Your Yoga Course:</h3>
                       <div className="training_courseGrid__1HYAd">
