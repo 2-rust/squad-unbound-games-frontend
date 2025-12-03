@@ -91,10 +91,12 @@ export function useAutoShapeNetwork() {
                   ],
                 });
                 // After adding, try to switch again
-                setTimeout(() => {
-                  switchChain({ chainId: shapeNetwork.id }).catch(() => {
+                setTimeout(async () => {
+                  try {
+                    await switchChain({ chainId: shapeNetwork.id });
+                  } catch {
                     isProcessingRef.current = false;
-                  });
+                  }
                 }, 1000);
               } catch (addError: any) {
                 console.error("Failed to add Shape Network:", addError);

@@ -214,7 +214,7 @@ export default function Home() {
       console.log(`🎫 Numeric Token IDs:`, tokenIds.map(id => parseInt(id, 10)));
       
       console.log(`\n📦 NFT Details:`);
-      hellraiserNFTs.forEach((nft, index) => {
+      hellraiserNFTs.forEach((nft, index: number) => {
         console.log(`\n   NFT #${index + 1}:`);
         console.log(`      Token ID: ${nft.tokenId}`);
         console.log(`      Name: ${nft.name}`);
