@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useMemo, useState } from "react";
 import { HELLRAISER_NFT_CONTRACT } from "@/config/nft-config";
 import { useUserProfile } from "@/hooks/useUserProfile";
@@ -521,7 +520,7 @@ export default function LeaderboardPage() {
                       <span className="leaderboard_tooltip__7a4Ml">
                         <span className="leaderboard_tooltipIcon__Bxvxg">?</span>
                         <span className="leaderboard_tooltipText__d__B5">
-                          Includes all distance during the cycles regardless if it's been applied to fighters
+                          Includes all distance during the cycles regardless if it&apos;s been applied to fighters
                         </span>
                       </span>
                     </>

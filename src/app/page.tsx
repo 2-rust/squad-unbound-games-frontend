@@ -162,12 +162,6 @@ const trainingMethods: TrainingMethod[] = [
   },
 ];
 
-const syncSteps = [
-  { title: "Warm-up logged", detail: "3.2 km tempo run" },
-  { title: "Cooldown logged", detail: "0.8 km jog" },
-  { title: "Training bonus", detail: "+140 endurance XP ready" },
-];
-
 const meditationCourses = [
   { id: 1, title: "Lesson One", subtitle: "Focus and Clarity", videoId: "pRjnf0ot0ss", timer: 339 }, // 5:39
   { id: 2, title: "Lesson Two", subtitle: "Grounding & Clarity", videoId: "J6W6AYsHnT0", timer: 749 }, // 12:29
@@ -281,7 +275,6 @@ export default function Home() {
   const [selectedCourse, setSelectedCourse] = useState<number | null>(null);
   const [videoTimer, setVideoTimer] = useState<number | null>(null);
   const [isVideoPaused, setIsVideoPaused] = useState(false);
-  const [hasActiveFighter, setHasActiveFighter] = useState(false);
   const { isConnected, address } = useAccount();
   const walletConnected = Boolean(isConnected);
   const searchParams = useSearchParams();
@@ -719,7 +712,6 @@ export default function Home() {
     setSelectionMessage(
       `${activeFighter.name} is now focusing on ${attribute?.title} via ${method?.title}.`,
     );
-    setHasActiveFighter(true);
     setSelectionConfirmed(true);
   };
 
