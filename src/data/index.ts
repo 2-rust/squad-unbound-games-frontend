@@ -1,5 +1,18 @@
+/**
+ * Application Data
+ * Configuration data, mock data, and static content for the application
+ */
+
 import type { AttributeCard, TrainingMethod, Course, FighterCard } from "@/types";
 
+// ============================================
+// Mock/Dummy Data
+// ============================================
+
+/**
+ * Mock fighter cards for development/testing
+ * In production, these are replaced by actual NFT data
+ */
 export const fighterCards: FighterCard[] = [
   {
     id: "#041",
@@ -13,6 +26,14 @@ export const fighterCards: FighterCard[] = [
   },
 ];
 
+// ============================================
+// Configuration Data
+// ============================================
+
+/**
+ * Available fighter attributes with their metadata
+ * Defines all possible attributes that can be trained or displayed
+ */
 export const attributeOptions: AttributeCard[] = [
   {
     id: "endurance",
@@ -112,6 +133,10 @@ export const attributeOptions: AttributeCard[] = [
   },
 ];
 
+/**
+ * Available training methods
+ * Defines the different ways users can train their fighters
+ */
 export const trainingMethods: TrainingMethod[] = [
   {
     id: "strava",
@@ -136,18 +161,83 @@ export const trainingMethods: TrainingMethod[] = [
   },
 ];
 
+// ============================================
+// Course Data
+// ============================================
+
+/**
+ * Meditation course content
+ * Each course includes video ID and timer duration in seconds
+ */
 export const meditationCourses: Course[] = [
-  { id: 1, title: "Lesson One", subtitle: "Focus and Clarity", videoId: "pRjnf0ot0ss", timer: 339 }, // 5:39
-  { id: 2, title: "Lesson Two", subtitle: "Grounding & Clarity", videoId: "J6W6AYsHnT0", timer: 749 }, // 12:29
-  { id: 3, title: "Lesson Three", subtitle: "Calm & Presence", videoId: "hXf2e0XFMPc", timer: 321 }, // 5:21
-  { id: 4, title: "Lesson Four", subtitle: "Breathe & Awareness", videoId: "ECbfqZzIzPA", timer: 736 }, // 12:16
+  { 
+    id: 1, 
+    title: "Lesson One", 
+    subtitle: "Focus and Clarity", 
+    videoId: "pRjnf0ot0ss", 
+    timer: 339 // 5:39
+  },
+  { 
+    id: 2, 
+    title: "Lesson Two", 
+    subtitle: "Grounding & Clarity", 
+    videoId: "J6W6AYsHnT0", 
+    timer: 749 // 12:29
+  },
+  { 
+    id: 3, 
+    title: "Lesson Three", 
+    subtitle: "Calm & Presence", 
+    videoId: "hXf2e0XFMPc", 
+    timer: 321 // 5:21
+  },
+  { 
+    id: 4, 
+    title: "Lesson Four", 
+    subtitle: "Breathe & Awareness", 
+    videoId: "ECbfqZzIzPA", 
+    timer: 736 // 12:16
+  },
 ];
 
+/**
+ * Yoga course content
+ * Each course includes video ID and timer duration in seconds
+ */
 export const yogaCourses: Course[] = [
-  { id: 1, title: "Lesson One", subtitle: "Between Tension and Technique", videoId: "gb_MGpw7zIs", timer: 669 }, // 11:09
-  { id: 2, title: "Lesson Two", subtitle: "Flow under Pressure", videoId: "XlBUeuWA7Q4", timer: 364 }, // 6:04
-  { id: 3, title: "Lesson Three", subtitle: "Precision and Stillness", videoId: "gHjVLRoYH7s", timer: 796 }, // 13:16
-  { id: 4, title: "Lesson Four", subtitle: "Watchful and Ready", videoId: "MKAjKetmM3M", timer: 504 }, // 8:24
-  { id: 5, title: "Lesson Five", subtitle: "Control the Center", videoId: "_z1qv7W2og0", timer: 545 }, // 9:05
+  { 
+    id: 1, 
+    title: "Lesson One", 
+    subtitle: "Between Tension and Technique", 
+    videoId: "gb_MGpw7zIs", 
+    timer: 669 // 11:09
+  },
+  { 
+    id: 2, 
+    title: "Lesson Two", 
+    subtitle: "Flow under Pressure", 
+    videoId: "XlBUeuWA7Q4", 
+    timer: 364 // 6:04
+  },
+  { 
+    id: 3, 
+    title: "Lesson Three", 
+    subtitle: "Precision and Stillness", 
+    videoId: "gHjVLRoYH7s", 
+    timer: 796 // 13:16
+  },
+  { 
+    id: 4, 
+    title: "Lesson Four", 
+    subtitle: "Watchful and Ready", 
+    videoId: "MKAjKetmM3M", 
+    timer: 504 // 8:24
+  },
+  { 
+    id: 5, 
+    title: "Lesson Five", 
+    subtitle: "Control the Center", 
+    videoId: "_z1qv7W2og0", 
+    timer: 545 // 9:05
+  },
 ];
-

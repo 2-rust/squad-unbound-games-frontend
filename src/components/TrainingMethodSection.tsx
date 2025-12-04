@@ -54,6 +54,14 @@ export function TrainingMethodSection({
             ))}
           </div>
         </div>
+        <button
+          type="button"
+          onClick={onConfirm}
+          disabled={confirmDisabled}
+          className="training-method-confirm-button"
+        >
+          Confirm Selection
+        </button>
         <div className="training-attribute-grid">
           {attributeOptions.map((attribute) => {
             const isHighlighted = (selectedMethod === "meditation" || selectedMethod === "yoga")
@@ -90,14 +98,6 @@ export function TrainingMethodSection({
             {selectionMessage}
           </div>
         )}
-        <button
-          type="button"
-          onClick={onConfirm}
-          disabled={confirmDisabled}
-          className="training-method-confirm-button"
-        >
-          Confirm Selection
-        </button>
       </div>
     </section>
   );

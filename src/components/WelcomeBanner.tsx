@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 
 type WelcomeBannerProps = {
@@ -9,6 +10,16 @@ type WelcomeBannerProps = {
 };
 
 export function WelcomeBanner({ displayName, displayAvatar, hasHellraiserNFTs }: WelcomeBannerProps) {
+  const [isClosed, setIsClosed] = useState(false);
+
+  const handleClose = () => {
+    setIsClosed(true);
+  };
+
+  if (isClosed) {
+    return null;
+  }
+
   return (
     <div
       style={{
@@ -20,6 +31,7 @@ export function WelcomeBanner({ displayName, displayAvatar, hasHellraiserNFTs }:
         justifyContent: "space-between",
         gap: "1rem",
         animation: "slideDown 0.3s ease-out",
+        position: "relative",
       }}
       className="welcome-banner"
     >
@@ -57,27 +69,58 @@ export function WelcomeBanner({ displayName, displayAvatar, hasHellraiserNFTs }:
           </div>
         </div>
       </div>
-      <Link
-        href="/profile"
-        style={{
-          padding: "0.5rem 1rem",
-          backgroundColor: "#d34836",
-          color: "white",
-          borderRadius: "6px",
-          textDecoration: "none",
-          fontSize: "0.9rem",
-          fontWeight: "500",
-          transition: "transform 0.2s, opacity 0.2s",
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = "scale(1.05)";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = "scale(1)";
-        }}
-      >
-        Edit Profile
-      </Link>
+      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+        <Link
+          href="/profile"
+          style={{
+            padding: "0.5rem 1rem",
+            backgroundColor: "#d34836",
+            color: "white",
+            borderRadius: "6px",
+            textDecoration: "none",
+            fontSize: "0.9rem",
+            fontWeight: "500",
+            transition: "transform 0.2s, opacity 0.2s",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "scale(1.05)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "scale(1)";
+          }}
+        >
+          Edit Profile
+        </Link>
+        <button
+          onClick={handleClose}
+          aria-label="Close welcome banner"
+          style={{
+            background: "none",
+            border: "none",
+            color: "#999",
+            fontSize: "1.5rem",
+            cursor: "pointer",
+            padding: "0.25rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "24px",
+            height: "24px",
+            borderRadius: "4px",
+            transition: "all 0.2s ease",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = "#fff";
+            e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = "#999";
+            e.currentTarget.style.backgroundColor = "transparent";
+          }}
+        >
+          ×
+        </button>
+      </div>
     </div>
   );
 }
