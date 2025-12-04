@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import type { TrainingMethod, AttributeCard } from "@/types";
 import { trainingMethods, attributeOptions } from "@/data";
 
 type TrainingMethodSectionProps = {
@@ -23,6 +22,8 @@ export function TrainingMethodSection({
   onMethodSelect,
   onConfirm,
 }: TrainingMethodSectionProps) {
+  const isMultiSelectMethod = selectedMethod === "meditation" || selectedMethod === "yoga";
+
   return (
     <section id="second-section" className="training-method-section">
       <div className="training-method-container">
@@ -33,25 +34,24 @@ export function TrainingMethodSection({
         </p>
         <div className="training-method-options-container">
           <div className="training-method-options">
-            {trainingMethods.map((method) => (
-              <button
-                key={method.id}
-                type="button"
-                onClick={() => onMethodSelect(method.id)}
-                className={`training-method-option ${
-                  selectedMethod === method.id
-                    ? "training-method-option--selected"
-                    : ""
-                }`}
-              >
-                <span className="training-method-option-icon">
-                  {method.icon}
-                </span>
-                <span className="training-method-option-name">
-                  {method.title}
-                </span>
-              </button>
-            ))}
+            {trainingMethods.map((method) => {
+              const isSelected = selectedMethod === method.id;
+              return (
+                <button
+                  key={method.id}
+                  type="button"
+                  onClick={() => onMethodSelect(method.id)}
+                  className={`training-method-option ${isSelected ? "training-method-option--selected" : ""}`}
+                >
+                  <span className="training-method-option-icon">
+                    {method.icon}
+                  </span>
+                  <span className="training-method-option-name">
+                    {method.title}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
         <button
@@ -64,18 +64,14 @@ export function TrainingMethodSection({
         </button>
         <div className="training-attribute-grid">
           {attributeOptions.map((attribute) => {
-            const isHighlighted = (selectedMethod === "meditation" || selectedMethod === "yoga")
+            const isHighlighted = isMultiSelectMethod
               ? selectedAttributesForCurrentMethod.includes(attribute.id)
               : selectedAttribute === attribute.id;
             
             return (
               <div
                 key={attribute.id}
-                className={`training-attribute-card ${
-                  isHighlighted
-                    ? "training-attribute-card--highlighted"
-                    : ""
-                }`}
+                className={`training-attribute-card ${isHighlighted ? "training-attribute-card--highlighted" : ""}`}
               >
                 <div className="training-attribute-emoji">
                   {attribute.emoji}
@@ -94,7 +90,7 @@ export function TrainingMethodSection({
           })}
         </div>
         {selectionMessage && (
-          <div className="training-method-message" style={{ marginBottom: "20px" }}>
+          <div className="training-method-message">
             {selectionMessage}
           </div>
         )}
