@@ -294,6 +294,7 @@ function HomeContent() {
   const [selectedCourse, setSelectedCourse] = useState<number | null>(null);
   const [videoTimer, setVideoTimer] = useState<number | null>(null);
   const [isVideoPaused, setIsVideoPaused] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const { isConnected, address } = useAccount();
   const walletConnected = Boolean(isConnected);
   const searchParams = useSearchParams();
@@ -821,6 +822,71 @@ function HomeContent() {
       setSelectionMessage("Failed to sync meditation training. Please try again.");
     }
   };
+
+  const handleFullscreen = (videoContainerId: string) => {
+    const container = document.getElementById(videoContainerId);
+    if (!container) return;
+
+    // Check current fullscreen state directly from document
+    const isCurrentlyFullscreen = !!(
+      document.fullscreenElement ||
+      (document as any).webkitFullscreenElement ||
+      (document as any).mozFullScreenElement ||
+      (document as any).msFullscreenElement
+    );
+
+    if (!isCurrentlyFullscreen) {
+      // Request fullscreen immediately
+      if (container.requestFullscreen) {
+        container.requestFullscreen().catch(err => {
+          console.error('Error attempting to enable fullscreen:', err);
+        });
+      } else if ((container as any).webkitRequestFullscreen) {
+        (container as any).webkitRequestFullscreen();
+      } else if ((container as any).mozRequestFullScreen) {
+        (container as any).mozRequestFullScreen();
+      } else if ((container as any).msRequestFullscreen) {
+        (container as any).msRequestFullscreen();
+      }
+    } else {
+      // Exit fullscreen
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch(err => {
+          console.error('Error attempting to exit fullscreen:', err);
+        });
+      } else if ((document as any).webkitExitFullscreen) {
+        (document as any).webkitExitFullscreen();
+      } else if ((document as any).mozCancelFullScreen) {
+        (document as any).mozCancelFullScreen();
+      } else if ((document as any).msExitFullscreen) {
+        (document as any).msExitFullscreen();
+      }
+    }
+  };
+
+  // Listen for fullscreen changes
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!(
+        document.fullscreenElement ||
+        (document as any).webkitFullscreenElement ||
+        (document as any).mozFullScreenElement ||
+        (document as any).msFullscreenElement
+      ));
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+    document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
+    };
+  }, []);
 
   const handleYogaSync = async () => {
     // Reference: squad.unbound.games-yoga.html - yoga sync logic
@@ -1671,20 +1737,49 @@ function HomeContent() {
                     </div>
                     {selectedCourse && (
                       <div className="training_section__B2pSK">
-                        <h3 className="training_sectionTitle__uwUa1">Course Video</h3>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+                          <h3 className="training_sectionTitle__uwUa1" style={{ margin: 0 }}>Course Video</h3>
+                          <button
+                            type="button"
+                            onClick={() => handleFullscreen(`meditation-video-player-container-${selectedCourse}`)}
+                            style={{
+                              padding: "0.5rem 1rem",
+                              backgroundColor: "#d34836",
+                              color: "white",
+                              border: "none",
+                              borderRadius: "6px",
+                              cursor: "pointer",
+                              fontSize: "0.9rem",
+                              fontWeight: "500",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "0.5rem",
+                            }}
+                            title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+                          >
+                            {isFullscreen ? "⤓ Exit Fullscreen" : "⛶ Fullscreen"}
+                          </button>
+                        </div>
                         <div className="training_videoContainer__dH5X2">
-                          <div id="meditation-video-player-container" key={`meditation-container-${selectedCourse}`}>
+                          <div 
+                            id={`meditation-video-player-container-${selectedCourse}`} 
+                            key={`meditation-container-${selectedCourse}`} 
+                            style={{ 
+                              position: "relative",
+                              width: "100%",
+                              height: "100%",
+                            }}
+                          >
                             <iframe
                               key={`meditation-${selectedCourse}`}
                               id="meditation-video-player"
                               frameBorder="0"
                               allowFullScreen
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
                               referrerPolicy="strict-origin-when-cross-origin"
                               title={`Meditation ${meditationCourses.find(c => c.id === selectedCourse)?.title}: ${meditationCourses.find(c => c.id === selectedCourse)?.subtitle}`}
-                              width="100%"
-                              height="300px"
-                              src={`https://www.youtube.com/embed/${meditationCourses.find(c => c.id === selectedCourse)?.videoId}?autoplay=0&controls=1&rel=0&showinfo=0&modestbranding=1&iv_load_policy=3&loop=0&fs=0&cc_load_policy=0&cc_lang_pref=en&hl=en&enablejsapi=1&origin=${typeof window !== "undefined" ? encodeURIComponent(window.location.origin) : ""}&widgetid=${(selectedCourse || 1) + 8}&forigin=${typeof window !== "undefined" ? encodeURIComponent(window.location.href) : ""}&aoriginsup=1&vf=6`}
+                              style={{ width: "100%", height: isFullscreen ? "100vh" : "300px" }}
+                              src={`https://www.youtube.com/embed/${meditationCourses.find(c => c.id === selectedCourse)?.videoId}?autoplay=0&controls=1&rel=0&showinfo=0&modestbranding=1&iv_load_policy=3&loop=0&fs=1&cc_load_policy=0&cc_lang_pref=en&hl=en&enablejsapi=1&origin=${typeof window !== "undefined" ? encodeURIComponent(window.location.origin) : ""}&widgetid=${(selectedCourse || 1) + 8}&forigin=${typeof window !== "undefined" ? encodeURIComponent(window.location.href) : ""}&aoriginsup=1&vf=6`}
                             />
                             {videoTimer !== null && (
                               <div className="training_videoTimer__a5fFn">
@@ -1763,20 +1858,49 @@ function HomeContent() {
                     </div>
                     {selectedCourse && (
                       <div className="training_section__B2pSK">
-                        <h3 className="training_sectionTitle__uwUa1">Course Video</h3>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+                          <h3 className="training_sectionTitle__uwUa1" style={{ margin: 0 }}>Course Video</h3>
+                          <button
+                            type="button"
+                            onClick={() => handleFullscreen(`yoga-video-player-container-${selectedCourse}`)}
+                            style={{
+                              padding: "0.5rem 1rem",
+                              backgroundColor: "#d34836",
+                              color: "white",
+                              border: "none",
+                              borderRadius: "6px",
+                              cursor: "pointer",
+                              fontSize: "0.9rem",
+                              fontWeight: "500",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "0.5rem",
+                            }}
+                            title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+                          >
+                            {isFullscreen ? "⤓ Exit Fullscreen" : "⛶ Fullscreen"}
+                          </button>
+                        </div>
                         <div className="training_videoContainer__dH5X2">
-                          <div id="video-player-container" key={`yoga-container-${selectedCourse}`}>
+                          <div 
+                            id={`yoga-video-player-container-${selectedCourse}`} 
+                            key={`yoga-container-${selectedCourse}`} 
+                            style={{ 
+                              position: "relative",
+                              width: "100%",
+                              height: "100%",
+                            }}
+                          >
                             <iframe
                               key={`yoga-${selectedCourse}`}
                               id="video-player"
                               frameBorder="0"
                               allowFullScreen
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
                               referrerPolicy="strict-origin-when-cross-origin"
                               title={`Yoga with Vlada: ${yogaCourses.find(c => c.id === selectedCourse)?.title} – ${yogaCourses.find(c => c.id === selectedCourse)?.subtitle}`}
-                              width="100%"
-                              height="300px"
-                              src={`https://www.youtube.com/embed/${yogaCourses.find(c => c.id === selectedCourse)?.videoId}?autoplay=0&controls=1&rel=0&showinfo=0&modestbranding=1&iv_load_policy=3&loop=0&fs=0&cc_load_policy=0&cc_lang_pref=en&hl=en&enablejsapi=1&origin=${typeof window !== "undefined" ? encodeURIComponent(window.location.origin) : ""}&widgetid=${(selectedCourse || 1) + 20}&forigin=${typeof window !== "undefined" ? encodeURIComponent(window.location.href) : ""}&aoriginsup=1&vf=4`}
+                              style={{ width: "100%", height: isFullscreen ? "100vh" : "300px" }}
+                              src={`https://www.youtube.com/embed/${yogaCourses.find(c => c.id === selectedCourse)?.videoId}?autoplay=0&controls=1&rel=0&showinfo=0&modestbranding=1&iv_load_policy=3&loop=0&fs=1&cc_load_policy=0&cc_lang_pref=en&hl=en&enablejsapi=1&origin=${typeof window !== "undefined" ? encodeURIComponent(window.location.origin) : ""}&widgetid=${(selectedCourse || 1) + 20}&forigin=${typeof window !== "undefined" ? encodeURIComponent(window.location.href) : ""}&aoriginsup=1&vf=4`}
                             />
                             {videoTimer !== null && (
                               <div className="training_videoTimer__a5fFn">
