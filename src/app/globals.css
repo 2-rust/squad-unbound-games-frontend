@@ -923,6 +923,19 @@ main:has(.leaderboard_container__yi1Tg) {
     margin-bottom: 0 !important;
   }
 
+  /* Reorder podium on mobile: First (top), Second (middle), Third (bottom) */
+  .leaderboard_podiumFirst__jtsoy {
+    order: 1 !important;
+  }
+
+  .leaderboard_podiumSecond__OWJ96 {
+    order: 2 !important;
+  }
+
+  .leaderboard_podiumThird__6Cmo8 {
+    order: 3 !important;
+  }
+
   .leaderboard_podiumImage__YhKr0 {
     width: 60px !important;
     height: 60px !important;
