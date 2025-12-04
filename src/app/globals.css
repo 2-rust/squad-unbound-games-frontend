@@ -1703,7 +1703,13 @@ main:has(.leaderboard_container__yi1Tg) {
    NAVIGATION ICONS - Mobile Responsive
    ============================================ */
 @media (max-width: 768px) {
-  /* Make leaderboard icon same size as profile icon on mobile */
+  /* Remove all shadows from leaderboard icon wrapper on mobile */
+  .nav_trophyIcon__c74LO {
+    filter: none !important;
+    animation: none !important;
+  }
+
+  /* Remove all shadows from leaderboard icon emoji on mobile */
   .nav_trophyEmoji__shiny {
     font-size: 20px !important;
     width: 24px !important;
@@ -1712,23 +1718,33 @@ main:has(.leaderboard_container__yi1Tg) {
     align-items: center !important;
     justify-content: center !important;
     line-height: 1 !important;
-    /* Reduce glow effects on mobile for better performance */
-    filter: drop-shadow(0 0 4px rgba(234, 211, 81, 1))
-            drop-shadow(0 0 8px rgba(234, 211, 81, 0.8))
-            drop-shadow(0 0 12px rgba(234, 211, 81, 0.6)) !important;
-    text-shadow: 0 0 6px rgba(234, 211, 81, 1),
-                 0 0 12px rgba(234, 211, 81, 0.8),
-                 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    filter: none !important;
+    text-shadow: none !important;
+    animation: none !important;
   }
 
+  /* Remove all shadows from profile icon (inner div) on mobile */
+  .nav_trophyIcon__c74LO > div {
+    filter: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Remove shadows on hover for leaderboard icon on mobile */
   .nav_leaderboardLink__Vf6MI:hover .nav_trophyEmoji__shiny {
-    filter: drop-shadow(0 0 6px rgba(234, 211, 81, 1))
-            drop-shadow(0 0 12px rgba(234, 211, 81, 1))
-            drop-shadow(0 0 18px rgba(234, 211, 81, 0.9)) !important;
-    text-shadow: 0 0 8px rgba(234, 211, 81, 1),
-                 0 0 16px rgba(234, 211, 81, 1),
-                 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    filter: none !important;
+    text-shadow: none !important;
     transform: scale(1.1) rotate(5deg) !important;
+  }
+
+  /* Remove shadows on hover for icon wrapper on mobile */
+  .nav_trophyIcon__c74LO:hover {
+    filter: none !important;
+  }
+
+  /* Remove shadows on hover for profile icon on mobile */
+  .nav_leaderboardLink__Vf6MI:hover .nav_trophyIcon__c74LO > div {
+    filter: none !important;
+    text-shadow: none !important;
   }
 }
 
@@ -1746,11 +1762,7 @@ main:has(.leaderboard_container__yi1Tg) {
     gap: 0.5rem !important;
   }
 
-  .carousel_card__AIxvR {
-    min-width: 280px !important;
-  }
-
-  /* Training method cards */
+ /* Training method cards */
   .training_methodCard__xY3qK {
     min-width: 200px !important;
   }

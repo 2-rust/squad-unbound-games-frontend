@@ -4,7 +4,7 @@ import { Space_Grotesk, Martian_Mono, Unbounded } from "next/font/google";
 import "@rainbow-me/rainbowkit/styles.css";
 import "./globals.css";
 import "./squad.css";
-import { SiteNav } from "./_components/site-nav";
+import { SiteNav } from "@/components/SiteNav";
 import { Web3Providers } from "@/components/providers";
 import { AutoShapeNetwork } from "@/components/auto-shape-network";
 
