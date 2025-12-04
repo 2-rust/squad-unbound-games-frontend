@@ -89,6 +89,36 @@ export default function LeaderboardPage() {
     return () => clearTimeout(timer);
   }, []);
 
+  /** Handle mobile tooltip touch events */
+  useEffect(() => {
+    const handleTooltipTouch = (e: TouchEvent) => {
+      const target = e.target as HTMLElement;
+      const tooltip = target.closest('.leaderboard-tooltip') as HTMLElement;
+      if (tooltip) {
+        e.preventDefault();
+        e.stopPropagation();
+        tooltip.classList.toggle('tooltip-active');
+        
+        // Close tooltip when tapping outside
+        const handleOutsideClick = (event: TouchEvent | MouseEvent) => {
+          if (!tooltip.contains(event.target as Node)) {
+            tooltip.classList.remove('tooltip-active');
+            document.removeEventListener('touchstart', handleOutsideClick);
+            document.removeEventListener('click', handleOutsideClick);
+          }
+        };
+        
+        document.addEventListener('touchstart', handleOutsideClick, { once: true });
+        document.addEventListener('click', handleOutsideClick, { once: true });
+      }
+    };
+
+    document.addEventListener('touchstart', handleTooltipTouch);
+    return () => {
+      document.removeEventListener('touchstart', handleTooltipTouch);
+    };
+  }, []);
+
   // ============================================
   // Handlers
   // ============================================

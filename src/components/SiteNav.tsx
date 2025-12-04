@@ -98,7 +98,7 @@ export function SiteNav() {
               return (
                 <button
                   type="button"
-                  className="connect-button connect-button--red rounded-full px-6 py-3 text-base"
+                  className="connect-button connect-button--red not-connect-button rounded-full px-6 py-3 text-base"
                   onClick={openConnectModal}
                 >
                   CONNECT WALLET

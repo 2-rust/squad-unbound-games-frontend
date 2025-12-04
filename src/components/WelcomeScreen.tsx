@@ -69,7 +69,7 @@ export function WelcomeScreen({ isLoadingHellraiser, hasHellraiserNFTs }: Welcom
               return (
                 <button
                   type="button"
-                  className="connect-button connect-button--red mt-6"
+                  className="connect-button connect-button--red connect-button--mobile mt-6"
                   onClick={openConnectModal}
                 >
                   CONNECT WALLET
