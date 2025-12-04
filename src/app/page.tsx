@@ -675,7 +675,7 @@ function HomeContent() {
         />
       )}
 
-      <div className="index_outer__GPFu3">
+      <div className="main-content-wrapper">
         <SideMenu
           items={sideMenu}
           activeSection={activeSection}

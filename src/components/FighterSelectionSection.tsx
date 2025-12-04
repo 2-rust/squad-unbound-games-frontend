@@ -39,7 +39,7 @@ export function FighterSelectionSection({
   onConfirm,
 }: FighterSelectionSectionProps) {
   return (
-    <section id="first-section" className="index_wrapper2__a74H5">
+    <section id="first-section" className="fighter-selection-section">
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
         <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
           <Image 
@@ -50,10 +50,10 @@ export function FighterSelectionSection({
           />
         </div>
         {isLoadingHellraiser ? (
-          <div className="carousel_counttext__HSuku">Loading NFTs...</div>
+          <div className="fighter-selection-count-text">Loading NFTs...</div>
         ) : (
           <>
-            <div className="carousel_counttext__HSuku">
+            <div className="fighter-selection-count-text">
               {hellraiserBalance > 0 ? (
                 `You own ${hellraiserBalance} Fighters `
               ) : (
@@ -66,7 +66,7 @@ export function FighterSelectionSection({
                 )
               )}
             </div>
-            <div className="carousel_greytext__pUltm">
+            <div className="fighter-selection-progress-text">
               {hellraiserBalance > 0 ? (
                 `Full Set Progress : ${hellraiserBalance} / 52 `
               ) : (
@@ -80,9 +80,9 @@ export function FighterSelectionSection({
           </>
         )}
         {!isLoadingHellraiser && (
-          <div className="carousel_secondary_button__vD1B9">
+          <div className="fighter-selection-buy-button">
             <a href="https://mintify.xyz/launchpad/fightersunbound" target="_blank" rel="noopener noreferrer">
-              <Image className="carousel_mintIcon__NuCvr" src="/assets/mintify.jpeg" alt="Mintify" width={24} height={24} />
+              <Image className="fighter-selection-mint-icon" src="/assets/mintify.jpeg" alt="Mintify" width={24} height={24} />
               Buy Fighters
             </a>
           </div>
@@ -113,11 +113,11 @@ export function FighterSelectionSection({
                 />
               )
             )}
-            <div className="carousel_text__gIzW1">
+            <div className="fighter-selection-instruction-text">
               Step 1: Set {isShowingEmptyState ? "" : (activeFighter?.name?.toUpperCase() || (hasHellraiserNFTs ? "HELLRAISER" : "FIGHTER"))} as active fighter, sign message below
             </div>
             {selectionMessage && (
-              <div className="sign_errormsg2__A7OL_" style={{ marginBottom: "20px" }}>
+              <div className="fighter-selection-message" style={{ marginBottom: "20px" }}>
                 {selectionMessage}
               </div>
             )}
@@ -127,7 +127,7 @@ export function FighterSelectionSection({
                   type="button"
                   onClick={onConfirm}
                   disabled={confirmDisabled}
-                  className="sign_submit_button__AnUC1"
+                  className="fighter-selection-confirm-button"
                 >
                   CONFIRM
                 </button>

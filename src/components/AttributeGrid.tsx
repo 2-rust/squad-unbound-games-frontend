@@ -17,15 +17,15 @@ export function AttributeGrid({
 }: AttributeGridProps) {
   if (showProgressBars) {
     return (
-      <div className={`carousel_attributesGrid__H19vs ${className}`}>
+      <div className={`fighter-attribute-grid ${className}`}>
         {attributes.map((attr, index) => (
-          <div key={index} className="carousel_attributeRow__XoXwZ">
-            <span className="carousel_attributeName__OZ9_Y">
+          <div key={index} className="fighter-attribute-row">
+            <span className="fighter-attribute-name">
               {attr.name.toLowerCase()}: {attr.value} 
             </span>
-            <div className="carousel_progressBar__WWysV">
+            <div className="fighter-attribute-progress-bar">
               <div 
-                className="carousel_progress__0SBp_" 
+                className="fighter-attribute-progress" 
                 style={{ width: `${attr.value}%` }}
               />
             </div>
@@ -36,22 +36,22 @@ export function AttributeGrid({
   }
 
   return (
-    <div className={`attributeselect_attributesGrid__lwVep ${className}`}>
+    <div className={`training-attribute-grid ${className}`}>
       {attributeOptions.map((attribute) => (
         <div
           key={attribute.id}
-          className="attributeselect_attributeCard__qYQrc"
+          className="training-attribute-card"
         >
-          <div className="attributeselect_attributeEmoji__UR7UH">
+          <div className="training-attribute-emoji">
             {attribute.emoji}
           </div>
-          <div className="attributeselect_attributeName__QitHW">
+          <div className="training-attribute-name">
             {attribute.title}
           </div>
-          <div className="attributeselect_attributeDescription__H8yAt">
+          <div className="training-attribute-description">
             {attribute.description}
           </div>
-          <div className="attributeselect_attributeStatus__1_Ygw">
+          <div className="training-attribute-status">
             {attribute.status}
           </div>
         </div>

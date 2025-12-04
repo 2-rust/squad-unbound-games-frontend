@@ -15,26 +15,38 @@ export function FighterCarousel({
   onNavigate, 
   isShowingEmptyState = false 
 }: FighterCarouselProps) {
-  const activeCard = cards[activeIndex] || cards[0];
+  const activeCard = cards[activeIndex];
 
   if (!activeCard) return null;
 
+  const isNavigationDisabled = cards.length <= 1;
+  const cardClasses = [
+    "fighter-carousel-card",
+    "fighter-carousel-card--active",
+    isShowingEmptyState && "fighter-carousel-card--blurred"
+  ].filter(Boolean).join(" ");
+  
+  const imageClasses = [
+    "fighter-carousel-card__image",
+    isShowingEmptyState && "fighter-carousel-card--blurred"
+  ].filter(Boolean).join(" ");
+
   return (
-    <div className="carousel_carouselContainer__kIQw9">
-      <div className="carousel_carousel__PxPRp">
+    <div className="fighter-carousel-container">
+      <div className="fighter-carousel-wrapper">
         <button
           type="button"
-          className="carousel_arrow__HHMhv"
+          className="fighter-carousel-nav-button"
           onClick={() => onNavigate("prev")}
           aria-label="Previous fighter"
-          disabled={cards.length <= 1}
+          disabled={isNavigationDisabled}
         >
           ❮
         </button>
-        <div className="carousel_cards__pPGpU">
-          <div className={`carousel_card__AIxvR carousel_active__w_ftY ${isShowingEmptyState ? "carousel_blurred___7NQ3" : ""}`}>
+        <div className="fighter-carousel-cards">
+          <div className={cardClasses}>
             <img
-              className={`carousel_nftimage__9S5Yc ${isShowingEmptyState ? "carousel_blurred___7NQ3" : ""}`}
+              className={imageClasses}
               alt="NFT"
               src={activeCard.image || "/assets/defaultnft.png"}
               onError={(e) => {
@@ -44,11 +56,13 @@ export function FighterCarousel({
                 }
               }}
             />
-            <div className="carousel_nftname__Ayk6W">{activeCard.name || "Unknown"}</div>
-            <div className="carousel_nftcreator__oJPL7">
+            <div className="fighter-carousel-card__name">
+              {activeCard.name || "Unknown"}
+            </div>
+            <div className="fighter-carousel-card__creator">
               {activeCard.creator || "Unknown"}
             </div>
-            <div className="carousel_info__PnV4W">
+            <div className="fighter-carousel-card__info">
               <span># {isShowingEmptyState ? "" : (activeCard.id?.replace("#", "") || "000")}</span>
               <span>Lv {isShowingEmptyState ? "" : (activeCard.level || "0")}</span>
             </div>
@@ -56,10 +70,10 @@ export function FighterCarousel({
         </div>
         <button
           type="button"
-          className="carousel_arrow__HHMhv"
+          className="fighter-carousel-nav-button"
           onClick={() => onNavigate("next")}
           aria-label="Next fighter"
-          disabled={cards.length <= 1}
+          disabled={isNavigationDisabled}
         >
           ❯
         </button>

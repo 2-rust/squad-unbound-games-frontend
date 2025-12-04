@@ -16,28 +16,28 @@ type SideMenuProps = {
 export function SideMenu({ items, activeSection, onSectionChange, isCollapsed, onToggleCollapse }: SideMenuProps) {
   return (
     <div
-      className={`sidemenu_container__awJ5O ${
-        isCollapsed ? "sidemenu_collapsed__6CvqR" : ""
+      className={`side-menu-container ${
+        isCollapsed ? "side-menu-container--collapsed" : ""
       }`}
     >
       <button
-        className="sidemenu_toggleButton__y__f8"
+        className="side-menu-toggle-button"
         type="button"
         onClick={onToggleCollapse}
       >
         {isCollapsed ? "→" : "←"}
       </button>
       {items.map((item, index) => (
-        <a key={item.id} href={`#${item.id}`} className="sidemenu_link__ax8_1">
+        <a key={item.id} href={`#${item.id}`} className="side-menu-link">
           <button
             type="button"
             onClick={() => onSectionChange(item.id)}
-            className={`sidemenu_button__PBtjJ ${
-              activeSection === item.id ? "sidemenu_active__IIi8d" : ""
+            className={`side-menu-button ${
+              activeSection === item.id ? "side-menu-button--active" : ""
             }`}
           >
-            <span className="sidemenu_circle__o5fCj">{index + 1}</span>
-            <span className={`sidemenu_label__text ${isCollapsed ? "sidemenu_label_hidden__xyz" : ""}`}>
+            <span className="side-menu-circle">{index + 1}</span>
+            <span className={`side-menu-label ${isCollapsed ? "side-menu-label--hidden" : ""}`}>
               {item.label}
             </span>
           </button>

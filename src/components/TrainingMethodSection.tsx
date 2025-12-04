@@ -24,37 +24,37 @@ export function TrainingMethodSection({
   onConfirm,
 }: TrainingMethodSectionProps) {
   return (
-    <section id="second-section" className="index_wrapper2__a74H5">
-      <div className="attributeselect_container__rmxCO">
+    <section id="second-section" className="training-method-section">
+      <div className="training-method-container">
         <Image width={200} height={200} src="/assets/logo.png" alt="Training logo" />
-        <h1 className="attributeselect_title__HzU4F">Select Training Method</h1>
-        <p className="attributeselect_subtitle__TGHPj">
+        <h1 className="training-method-title">Select Training Method</h1>
+        <p className="training-method-subtitle">
           Please select from the three training options
         </p>
-        <div className="attributeselect_trainingMethodsContainer__FGBUC">
-          <div className="attributeselect_trainingMethods__x5qtS">
+        <div className="training-method-options-container">
+          <div className="training-method-options">
             {trainingMethods.map((method) => (
               <button
                 key={method.id}
                 type="button"
                 onClick={() => onMethodSelect(method.id)}
-                className={`attributeselect_trainingMethod__yi7No ${
+                className={`training-method-option ${
                   selectedMethod === method.id
-                    ? "attributeselect_selected__8T4DU"
+                    ? "training-method-option--selected"
                     : ""
                 }`}
               >
-                <span className="attributeselect_methodIcon__BtABI">
+                <span className="training-method-option-icon">
                   {method.icon}
                 </span>
-                <span className="attributeselect_methodName__oKmC4">
+                <span className="training-method-option-name">
                   {method.title}
                 </span>
               </button>
             ))}
           </div>
         </div>
-        <div className="attributeselect_attributesGrid__lwVep">
+        <div className="training-attribute-grid">
           {attributeOptions.map((attribute) => {
             const isHighlighted = (selectedMethod === "meditation" || selectedMethod === "yoga")
               ? selectedAttributesForCurrentMethod.includes(attribute.id)
@@ -63,22 +63,22 @@ export function TrainingMethodSection({
             return (
               <div
                 key={attribute.id}
-                className={`attributeselect_attributeCard__qYQrc ${
+                className={`training-attribute-card ${
                   isHighlighted
-                    ? "attributeselect_highlighted__8f7K6"
+                    ? "training-attribute-card--highlighted"
                     : ""
                 }`}
               >
-                <div className="attributeselect_attributeEmoji__UR7UH">
+                <div className="training-attribute-emoji">
                   {attribute.emoji}
                 </div>
-                <div className="attributeselect_attributeName__QitHW">
+                <div className="training-attribute-name">
                   {attribute.title}
                 </div>
-                <div className="attributeselect_attributeDescription__H8yAt">
+                <div className="training-attribute-description">
                   {attribute.description}
                 </div>
-                <div className="attributeselect_attributeStatus__1_Ygw">
+                <div className="training-attribute-status">
                   {attribute.status}
                 </div>
               </div>
@@ -86,7 +86,7 @@ export function TrainingMethodSection({
           })}
         </div>
         {selectionMessage && (
-          <div className="attributeselect_successMessage___Svfu" style={{ marginBottom: "20px" }}>
+          <div className="training-method-message" style={{ marginBottom: "20px" }}>
             {selectionMessage}
           </div>
         )}
@@ -94,7 +94,7 @@ export function TrainingMethodSection({
           type="button"
           onClick={onConfirm}
           disabled={confirmDisabled}
-          className="attributeselect_confirmButton__WmxNu"
+          className="training-method-confirm-button"
         >
           Confirm Selection
         </button>

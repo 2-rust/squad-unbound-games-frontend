@@ -14,7 +14,7 @@ export function WelcomeScreen({ isLoadingHellraiser, hasHellraiserNFTs }: Welcom
 
   return (
     <main style={{ backgroundColor: "#202020", color: "white", minHeight: "100vh" }}>
-      <div className="index_wrapper__epjO8">
+      <div className="welcome-screen-container">
         <Image
           src="/assets/logo.png"
           alt="Fighters Unbound logo"
@@ -69,7 +69,7 @@ export function WelcomeScreen({ isLoadingHellraiser, hasHellraiserNFTs }: Welcom
               return (
                 <button
                   type="button"
-                  className="connectbutton_redConnectButton__SrvWE mt-6"
+                  className="connect-button connect-button--red mt-6"
                   onClick={openConnectModal}
                 >
                   CONNECT WALLET
@@ -81,7 +81,7 @@ export function WelcomeScreen({ isLoadingHellraiser, hasHellraiserNFTs }: Welcom
               <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row">
                 <button
                   type="button"
-                  className="connectbutton_blackConnectButtonSmall__MDYTu"
+                  className="connect-button connect-button--black connect-button--small"
                   onClick={openChainModal}
                 >
                   <span className="mr-1 inline-flex h-3 w-3 items-center justify-center rounded-full bg-[rgb(72,76,80)]">
@@ -91,7 +91,7 @@ export function WelcomeScreen({ isLoadingHellraiser, hasHellraiserNFTs }: Welcom
                 </button>
                 <button
                   type="button"
-                  className="connectbutton_redConnectButtonSmall__GSJ3j"
+                  className="connect-button connect-button--red connect-button--small"
                   onClick={openAccountModal}
                 >
                   {accountFromButton?.displayName}
@@ -100,7 +100,7 @@ export function WelcomeScreen({ isLoadingHellraiser, hasHellraiserNFTs }: Welcom
             );
           }}
         </ConnectButton.Custom>
-        <p className="index_connect_text__MfK9o">
+        <p className="welcome-screen-connect-text">
           Connect your wallet to view your {isLoadingHellraiser ? "NFTs" : hasHellraiserNFTs ? "Hellraisers" : "Fighters"}
         </p>
       </div>

@@ -29,16 +29,16 @@ export function SyncPopup({
   const attrName = selectedAttr?.title || "Endurance";
 
   return (
-    <div className="training_popup2_overlay__aTZaR">
-      <div className="training_popup2_popup__ySQBi">
-        <h2 className="training_popup2_title__sHkW2">
+    <div className="sync-popup-overlay">
+      <div className="sync-popup">
+        <h2 className="sync-popup-title">
           Synced! No new activity detected
         </h2>
         
-        <div className="training_popup2_fighter__VqV3O">
+        <div className="sync-popup-fighter">
           <img 
             alt={activeFighter.name || "Fighter"} 
-            className="training_popup2_image__f_4Oz" 
+            className="sync-popup-image" 
             src={activeFighter.image || "/assets/defaultnft.png"}
             onError={(e) => {
               const target = e.target as HTMLImageElement;
@@ -47,54 +47,54 @@ export function SyncPopup({
               }
             }}
           />
-          <div className="training_popup2_nameContainer__ByiCj">
-            <div className="training_popup2_name__GZbQm">
+          <div className="sync-popup-name-container">
+            <div className="sync-popup-name">
               {activeFighter.name?.toUpperCase() || "UNKNOWN"}
             </div>
           </div>
         </div>
       
-        <p className="training_popup2_subtitle__DMb9E">Trainable Skill</p>
+        <p className="sync-popup-subtitle">Trainable Skill</p>
         
-        <div className="training_popup2_progressBarContainer__u21vO">
-          <div className="training_popup2_progressBar__IiPqH">
+        <div className="sync-popup-progress-bar-container">
+          <div className="sync-popup-progress-bar">
             <div 
-              className="training_popup2_lastEndurance__5uSX_" 
+              className="sync-popup-last-endurance" 
               style={{ width: `${currentValue}%` }}
             >
               {emoji} {attrName} : {currentValue} (+ {syncResult.enduranceDelta})
             </div>
             <div 
-              className="training_popup2_enduranceDelta__nzK8A" 
+              className="sync-popup-endurance-delta" 
               style={{ width: `${syncResult.enduranceDelta}%` }}
             />
             <div 
-              className="training_popup2_maxMarker__bEW3q" 
+              className="sync-popup-max-marker" 
               style={{ left: "100%" }}
             />
           </div>
         </div>
         
-        <p className="training_popup2_subtitle__DMb9E">Last Session</p>
+        <p className="sync-popup-subtitle">Last Session</p>
         
-        <ul className="training_popup2_statsList__BIlFW">
+        <ul className="sync-popup-stats-list">
           <li>
             Endurance:
-            <span className="training_greentext__mRZOS">+ {syncResult.enduranceDelta}</span>
+            <span className="sync-popup-green-text">+ {syncResult.enduranceDelta}</span>
           </li>
           <li>
             Distance:
-            <span className="training_greentext__mRZOS">+ {syncResult.distance.toFixed(1)} km</span>
+            <span className="sync-popup-green-text">+ {syncResult.distance.toFixed(1)} km</span>
           </li>
           <li>
             Level:
-            <span className="training_greentext__mRZOS">+ {syncResult.levelDelta}</span>
+            <span className="sync-popup-green-text">+ {syncResult.levelDelta}</span>
           </li>
         </ul>
         
-        <div className="training_shareButtonList__xScJ7">
+        <div className="sync-popup-share-button-list">
           <button 
-            className="training_shareButton__7aUVX training_twitter_icon__adOYY"
+            className="sync-popup-share-button sync-popup-share-button--twitter"
             onClick={() => {
               const fighterName = activeFighter.name?.toUpperCase() || "FIGHTER";
               const distance = syncResult.distance.toFixed(1);
@@ -105,7 +105,7 @@ export function SyncPopup({
             }}
           />
           <button 
-            className="training_shareButton__7aUVX training_wrapcast_icon__FNYq_"
+            className="sync-popup-share-button sync-popup-share-button--wrapcast"
             onClick={() => {
               const text = `Just synced ${syncResult.distance.toFixed(1)} km with ${activeFighter.name}!`;
               const url = `https://warpcast.com/~/compose?text=${encodeURIComponent(text)}`;
@@ -113,7 +113,7 @@ export function SyncPopup({
             }}
           />
           <button 
-            className="training_shareButton__7aUVX training_telegram_icon__aO2RH"
+            className="sync-popup-share-button sync-popup-share-button--telegram"
             onClick={() => {
               const text = `Just synced ${syncResult.distance.toFixed(1)} km with ${activeFighter.name}!`;
               const url = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(text)}`;
@@ -123,7 +123,7 @@ export function SyncPopup({
         </div>
         
         <button 
-          className="training_closeButton__e_l3I" 
+          className="sync-popup-close-button" 
           onClick={onClose}
         >
           Close

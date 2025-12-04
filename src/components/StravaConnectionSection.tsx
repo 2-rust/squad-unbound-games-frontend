@@ -21,9 +21,9 @@ export function StravaConnectionSection({
 }: StravaConnectionSectionProps) {
   if (!activeFighter || isShowingEmptyState || !activeFighter.isOwned) {
     return (
-      <section id="third-section" className="index_wrapper3__A9vvd" style={{ margin: 0, padding: 0 }}>
-        <div className="fighterdisplay_wrapper__q5JIV" style={{ width: "100%", minHeight: "100vh", margin: 0, padding: 0 }}>
-          <span className="fighterdisplay_error_text__3Oc7Y" style={{ color: "black" }}>
+      <section id="third-section" className="strava-connection-section" style={{ margin: 0, padding: 0 }}>
+        <div className="fighter-display-wrapper" style={{ width: "100%", minHeight: "100vh", margin: 0, padding: 0 }}>
+          <span className="fighter-display-error-text" style={{ color: "black" }}>
             Please set your {hasHellraiserNFTs ? "Hellraiser" : "fighter"} first
           </span>
         </div>
@@ -32,9 +32,9 @@ export function StravaConnectionSection({
   }
 
   return (
-    <section id="third-section" className="index_wrapper3__A9vvd" style={{ margin: 0, padding: 0 }}>
+    <section id="third-section" className="strava-connection-section" style={{ margin: 0, padding: 0 }}>
       <div 
-        className="fighterdisplay_wrapper__q5JIV" 
+        className="fighter-display-wrapper" 
         style={{ 
           backgroundImage: `url("https://storage.googleapis.com/fu-public-asset/background/18.jpg")`, 
           backgroundSize: "cover", 
@@ -44,13 +44,13 @@ export function StravaConnectionSection({
           minHeight: "100vh" 
         }}
       >
-        <div className="fighterdisplay_imageBarLeft__ECvHX"></div>
-        <div className="fighterdisplay_background__tOjhW">
-          <div className="fighterdisplay_container__rLuu4">
-            <div className="fighterdisplay_left__d1S_v">
+        <div className="fighter-display-image-bar-left"></div>
+        <div className="fighter-display-background">
+          <div className="fighter-display-container">
+            <div className="fighter-display-left">
               <img
                 alt={activeFighter.name || "Fighter"}
-                className="fighterdisplay_image__bwaQS"
+                className="fighter-display-image"
                 src={activeFighter.image || "/assets/defaultnft.png"}
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
@@ -61,41 +61,41 @@ export function StravaConnectionSection({
               />
               YOUR CHOSEN FIGHTER
             </div>
-            <div className="fighterdisplay_infoContainer__QH0Nt">
-              <div className="fighterdisplay_header__J7q6o">
-                <div className="fighterdisplay_levelCircle__WymYf">{activeFighter.level || "0"}</div>
-                <div className="fighterdisplay_nameContainer__Eestk">
-                  <div className="fighterdisplay_name__fmw1j">{activeFighter.name?.toUpperCase() || "UNKNOWN"}</div>
-                  <div className="fighterdisplay_miniLevel__dSxVK">Level: {activeFighter.level || "0"}</div>
+            <div className="fighter-display-info-container">
+              <div className="fighter-display-header">
+                <div className="fighter-display-level-circle">{activeFighter.level || "0"}</div>
+                <div className="fighter-display-name-container">
+                  <div className="fighter-display-name">{activeFighter.name?.toUpperCase() || "UNKNOWN"}</div>
+                  <div className="fighter-display-mini-level">Level: {activeFighter.level || "0"}</div>
                 </div>
               </div>
-              <div className="fighterdisplay_statsContainer__CTHxE">
+              <div className="fighter-display-stats-container">
                 {numericAttributes.length > 0 ? (
                   numericAttributes.map((attr, index) => (
-                    <div key={index} className="fighterdisplay_stat__ntomZ">
-                      <div className="fighterdisplay_statBar__oHh4v">
+                    <div key={index} className="fighter-display-stat">
+                      <div className="fighter-display-stat-bar">
                         <div 
-                          className="fighterdisplay_statFill__chn8I" 
+                          className="fighter-display-stat-fill" 
                           style={{ width: `${attr.value}%` }}
                         />
-                        <span className="fighterdisplay_statName__VE87k">{attr.name.toLowerCase()}</span>
+                        <span className="fighter-display-stat-name">{attr.name.toLowerCase()}</span>
                       </div>
-                      <span className="fighterdisplay_statText__9cAK1">{attr.value}</span>
+                      <span className="fighter-display-stat-text">{attr.value}</span>
                     </div>
                   ))
                 ) : (
                   attributeOptions.map((attr) => {
                     const value = DEFAULT_ATTRIBUTE_VALUES[attr.id] || 0;
                     return (
-                      <div key={attr.id} className="fighterdisplay_stat__ntomZ">
-                        <div className="fighterdisplay_statBar__oHh4v">
+                      <div key={attr.id} className="fighter-display-stat">
+                        <div className="fighter-display-stat-bar">
                           <div 
-                            className="fighterdisplay_statFill__chn8I" 
+                            className="fighter-display-stat-fill" 
                             style={{ width: `${value}%` }}
                           />
-                          <span className="fighterdisplay_statName__VE87k">{attr.title.toLowerCase()}</span>
+                          <span className="fighter-display-stat-name">{attr.title.toLowerCase()}</span>
                         </div>
-                        <span className="fighterdisplay_statText__9cAK1">{value}</span>
+                        <span className="fighter-display-stat-text">{value}</span>
                       </div>
                     );
                   })
@@ -103,8 +103,8 @@ export function StravaConnectionSection({
               </div>
             </div>
           </div>
-          <div className="strava_container__qvP8U">
-            <div className="strava_info__4tOFg">
+          <div className="strava-container">
+            <div className="strava-info">
               Step 2.Connect with Strava to start training (Check Both Boxes ✅)
             </div>
             <a
@@ -113,17 +113,17 @@ export function StravaConnectionSection({
               rel="noopener noreferrer"
             >
               <img
-                className="strava_connectButton__LTkhf"
+                className="strava-connect-button"
                 alt="Connect with Strava"
                 src="/assets/btn_strava_connect_with_orange_x2.png"
               />
             </a>
           </div>
-          <div className="fighterdisplay_squaretext__xkfDf">
+          <div className="fighter-display-square-text">
             Strava linked to @dillon_marszalek! You&apos;re ready for training
           </div>
         </div>
-        <div className="fighterdisplay_imageBarRight__h36Ad"></div>
+        <div className="fighter-display-image-bar-right"></div>
       </div>
     </section>
   );

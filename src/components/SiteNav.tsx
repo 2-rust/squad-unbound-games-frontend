@@ -20,33 +20,33 @@ export function SiteNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="nav_navbar__dHFWK px-2 py-8 sm:px-6">
-      <div className="nav_logo__RNJOQ">
-        <Link href="/" className="nav_logoimg__0IosO">
+    <nav className="navigation-bar px-2 py-8 sm:px-6">
+      <div className="navigation-logo">
+        <Link href="/" className="navigation-logo-link">
           <Image
             src="/assets/sitelogo.png"
             alt="Fighters Unbound"
             width={60}
             height={60}
             priority
-            className="nav_logoimg__0IosO"
+            className="navigation-logo-image"
           />
         </Link>
       </div>
-      <div className="nav_navright__R_2jL">
+      <div className="navigation-right">
         {navLinks.map((link) => (
           <Link
             key={link.href}
             href={link.href}
-            className={`nav_leaderboardLink__Vf6MI ${
+            className={`navigation-leaderboard-link ${
               pathname === link.href ? "text-ember" : ""
             }`}
           >
             {link.href === "/leaderboard" ? (
               <>
-                <div className="nav_trophyIcon__c74LO">
+                <div className="navigation-trophy-icon">
                   <div
-                    className="nav_trophyEmoji__shiny"
+                    className="navigation-trophy-emoji"
                     style={{
                       width: "24px",
                       height: "24px",
@@ -63,7 +63,7 @@ export function SiteNav() {
               </>
             ) : (
               <>
-                <div className="nav_trophyIcon__c74LO">
+                <div className="navigation-trophy-icon">
                   <div
                     style={{
                       width: "24px",
@@ -98,7 +98,7 @@ export function SiteNav() {
               return (
                 <button
                   type="button"
-                  className="connectbutton_redConnectButton__SrvWE rounded-full px-6 py-3 text-base"
+                  className="connect-button connect-button--red rounded-full px-6 py-3 text-base"
                   onClick={openConnectModal}
                 >
                   CONNECT WALLET
@@ -110,7 +110,7 @@ export function SiteNav() {
               <>
                 <button
                   type="button"
-                  className="connectbutton_blackConnectButtonSmall__MDYTu rounded-full px-4 py-2 text-sm"
+                  className="connect-button connect-button--black connect-button--small rounded-full px-4 py-2 text-sm"
                   onClick={openChainModal}
                 >
                   <span className="mr-1 inline-flex h-3 w-3 items-center justify-center rounded-full bg-[rgb(72,76,80)]">
@@ -120,7 +120,7 @@ export function SiteNav() {
                 </button>
                 <button
                   type="button"
-                  className="connectbutton_blackConnectButtonSmall__MDYTu rounded-full px-4 py-2 text-sm"
+                  className="connect-button connect-button--black connect-button--small rounded-full px-4 py-2 text-sm"
                   onClick={openAccountModal}
                 >
                   {account?.displayName}
@@ -129,7 +129,7 @@ export function SiteNav() {
             );
           }}
         </ConnectButton.Custom>
-        <button className="nav_menuButton__RMGek" type="button">
+        <button className="navigation-menu-button" type="button">
           ☰
         </button>
       </div>
