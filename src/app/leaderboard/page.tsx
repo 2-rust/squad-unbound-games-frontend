@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { HELLRAISER_NFT_CONTRACT } from "@/config/nft-config";
 import { useUserProfile } from "@/hooks/useUserProfile";
 
@@ -376,7 +376,39 @@ export default function LeaderboardPage() {
   const [activeTime, setActiveTime] = useState<(typeof timeFilters)[number]>(
     "Total",
   );
+  const [isLoading, setIsLoading] = useState(true);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const { getProfileForWallet } = useUserProfile();
+
+  // Simulate loading state on mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Handle view change with transition
+  const handleViewChange = (view: (typeof viewTabs)[number]) => {
+    if (view !== activeView) {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setActiveView(view);
+        setIsTransitioning(false);
+      }, 150);
+    }
+  };
+
+  // Handle time filter change with transition
+  const handleTimeChange = (time: (typeof timeFilters)[number]) => {
+    if (time !== activeTime) {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setActiveTime(time);
+        setIsTransitioning(false);
+      }, 150);
+    }
+  };
 
   const tableConfig = useMemo(() => {
     if (activeView === "Fighter Rank") {
@@ -415,40 +447,47 @@ export default function LeaderboardPage() {
   }, [activeView, activeTime]);
 
   return (
-    <main style={{ backgroundColor: "#000", color: "white" }}>
+    <main className="leaderboard_main__wrapper" style={{ backgroundColor: "#000", color: "white" }}>
       <div className="leaderboard_container__yi1Tg">
-      <div className="leaderboard_tabs__HF7BZ" style={{ display: "flex", gap: "10px" }}>
-        {viewTabs.map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveView(tab)}
-            className={`leaderboard_mytab__Y2Oml ${
-              activeView === tab ? "leaderboard_activeTab__or1Dd" : ""
-            }`}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
+        {isLoading ? (
+          <div className="leaderboard_loading__container">
+            <div className="leaderboard_loading__spinner"></div>
+            <p className="leaderboard_loading__text">Loading leaderboard...</p>
+          </div>
+        ) : (
+          <>
+            <div className="leaderboard_tabs__HF7BZ" style={{ display: "flex", gap: "10px" }}>
+              {viewTabs.map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => handleViewChange(tab)}
+                  className={`leaderboard_mytab__Y2Oml ${
+                    activeView === tab ? "leaderboard_activeTab__or1Dd" : ""
+                  }`}
+                  aria-pressed={activeView === tab}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
 
-      <div className="leaderboard_filter__o7v8T">
-        <div className="leaderboard_durationButtons__v__oa">
-          {timeFilters.map((filter) => (
-            <button
-              key={filter}
-              onClick={() => setActiveTime(filter)}
-              className={`leaderboard_durationButton__CpZ0D ${
-                activeTime === filter ? "leaderboard_active__nuLns" : ""
-              }`}
-            >
-              {filter}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="leaderboard_content__hAO2Y">
-        {/* Podium Section - Top 3 Fighters */}
+            <div className="leaderboard_filter__o7v8T">
+              <div className="leaderboard_durationButtons__v__oa">
+                {timeFilters.map((filter) => (
+                  <button
+                    key={filter}
+                    onClick={() => handleTimeChange(filter)}
+                    className={`leaderboard_durationButton__CpZ0D ${
+                      activeTime === filter ? "leaderboard_active__nuLns" : ""
+                    }`}
+                    aria-pressed={activeTime === filter}
+                  >
+                    {filter}
+                  </button>
+                ))}
+              </div>
+            </div>
+            {/* Podium Section - Top 3 Fighters */}
         {activeView === "Fighter Rank" && (() => {
           const currentFighters = fighterData[activeTime];
           const top3 = currentFighters.slice(0, 3);
@@ -509,6 +548,8 @@ export default function LeaderboardPage() {
             </div>
           );
         })()}
+      <div className={`leaderboard_content__hAO2Y ${isTransitioning ? "leaderboard_fade__transition" : ""}`}>
+        
         <table className="leaderboard_table__E12wC">
           <thead>
             <tr>
@@ -713,8 +754,10 @@ export default function LeaderboardPage() {
                 );
               })}
           </tbody>
-        </table>
-        </div>
+            </table>
+            </div>
+          </>
+        )}
       </div>
     </main>
   );
