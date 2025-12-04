@@ -20,7 +20,7 @@ export function SiteNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="nav_navbar__dHFWK px-2 py-10 sm:px-6">
+    <nav className="nav_navbar__dHFWK px-2 py-8 sm:px-6">
       <div className="nav_logo__RNJOQ">
         <Link href="/" className="nav_logoimg__0IosO">
           <Image
@@ -45,15 +45,21 @@ export function SiteNav() {
             {link.href === "/leaderboard" ? (
               <>
                 <div className="nav_trophyIcon__c74LO">
-                  <Image
-                    src="/assets/leaderboard.png"
-                    alt="Leaderboard"
-                    width={32}
-                    height={32}
-                    className="nav_trophyImage__JHT1V"
-                  />
+                  <div
+                    className="nav_trophyEmoji__shiny"
+                    style={{
+                      width: "24px",
+                      height: "24px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "20px",
+                    }}
+                  >
+                    🏆
+                  </div>
                 </div>
-                <span className="hidden sm:inline">Leaderboard</span>
+                {/* <span className="hidden sm:inline">Leaderboard</span> */}
               </>
             ) : (
               <>
@@ -66,13 +72,12 @@ export function SiteNav() {
                       alignItems: "center",
                       justifyContent: "center",
                       fontSize: "20px",
-                      filter: "brightness(0) saturate(100%)",
                     }}
                   >
                     👤
                   </div>
                 </div>
-                <span className="hidden sm:inline">{link.label}</span>
+                {/* <span className="hidden sm:inline">{link.label}</span> */}
               </>
             )}
           </Link>
@@ -111,11 +116,11 @@ export function SiteNav() {
                   <span className="mr-1 inline-flex h-3 w-3 items-center justify-center rounded-full bg-[rgb(72,76,80)]">
                     <span className="h-2 w-2 rounded-full bg-white" />
                   </span>
-                  {chain?.name ?? "Network"}
+                  {chain?.name ? chain.name.replace(/\s*Network\s*/gi, "").trim() || "Network" : "Network"}
                 </button>
                 <button
                   type="button"
-                  className="connectbutton_redConnectButtonSmall__GSJ3j rounded-full px-4 py-2 text-sm"
+                  className="connectbutton_blackConnectButtonSmall__MDYTu rounded-full px-4 py-2 text-sm"
                   onClick={openAccountModal}
                 >
                   {account?.displayName}

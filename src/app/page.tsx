@@ -1098,13 +1098,12 @@ function HomeContent() {
           style={{
             backgroundColor: "#2a2a2a",
             borderBottom: "2px solid #333",
-            padding: "1rem 2rem",
+            padding: "10px 2rem 6px 2rem",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
             gap: "1rem",
             animation: "slideDown 0.3s ease-out",
-            paddingTop: "30px",
           }}
           className="welcome-banner"
         >

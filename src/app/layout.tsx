@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Space_Grotesk } from "next/font/google";
+import { Space_Grotesk, Martian_Mono, Unbounded } from "next/font/google";
 import "@rainbow-me/rainbowkit/styles.css";
 import "./globals.css";
 import "./squad.css";
@@ -23,6 +23,22 @@ const geistMono = localFont({
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-space-grotesk",
+});
+
+// Unbounded font from Google Fonts
+const unbounded = Unbounded({
+  subsets: ["latin", "cyrillic", "latin-ext"],
+  variable: "--font-unbounded",
+  weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
+  display: "swap",
+});
+
+// Martian Mono font from Google Fonts
+const martianMono = Martian_Mono({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-martian-mono",
+  weight: ["200", "300", "400", "500", "600", "700", "800"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -51,7 +67,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${unbounded.variable} ${martianMono.variable} antialiased`}
       >
         <Web3Providers>
           <AutoShapeNetwork />

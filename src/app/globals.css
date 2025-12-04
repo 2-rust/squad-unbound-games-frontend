@@ -46,8 +46,7 @@ html {
 body {
   color: var(--foreground);
   background: radial-gradient(circle at top, #1d1d2f 0%, #0e0e16 55%);
-  font-family: "Space Grotesk", var(--font-space-grotesk), var(--font-geist-sans),
-    system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-unbounded), var(--font-martian-mono), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   min-height: 100vh;
 }
 
@@ -61,10 +60,9 @@ body {
   display: none; /* Chrome, Safari, Opera */
 }
 
-/* Ensure Space Grotesk is applied to all elements */
+/* Ensure Unbounded font is applied to all elements */
 * {
-  font-family: "Space Grotesk", var(--font-space-grotesk), var(--font-geist-sans),
-    system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-unbounded), var(--font-martian-mono), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 section {
@@ -94,18 +92,15 @@ section {
 
 /* Welcome video fade out effect - handled by React state and Tailwind classes */
 
-/* Ensure all text uses Space Grotesk font from squad.css */
-/* Remove any font overrides to match reference site exactly */
+/* Ensure all text uses Unbounded font */
 body, main, section, div, p, h1, h2, h3, h4, h5, h6, span, button, a, td, th, table, thead, tbody, tr {
-  font-family: "Space Grotesk", var(--font-space-grotesk), var(--font-geist-sans),
-    system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-family: var(--font-unbounded), var(--font-martian-mono), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
 }
 
-/* Override Tailwind base styles to ensure squad.css takes precedence */
+/* Override Tailwind base styles to ensure Unbounded font takes precedence */
 @layer base {
   * {
-    font-family: "Space Grotesk", var(--font-space-grotesk), var(--font-geist-sans),
-      system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-family: var(--font-unbounded), var(--font-martian-mono), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
   }
 }
 
@@ -132,7 +127,7 @@ body, main, section, div, p, h1, h2, h3, h4, h5, h6, span, button, a, td, th, ta
   
   /* Side menu positioning - creates space below header */
   .sidemenu_container__awJ5O {
-    top: 90px !important;
+    top: 74px !important;
     transform: none !important;
     width: 100vw !important;
     max-width: 100vw !important;
@@ -264,6 +259,7 @@ body, main, section, div, p, h1, h2, h3, h4, h5, h6, span, button, a, td, th, ta
     z-index: 10000 !important;
     position: fixed !important;
     pointer-events: auto !important;
+    gap: 10px !important;
   }
   
   /* Logo - ensure clickable */
@@ -291,9 +287,187 @@ body, main, section, div, p, h1, h2, h3, h4, h5, h6, span, button, a, td, th, ta
     z-index: 10002 !important;
     position: relative !important;
   }
-  
+
   .nav_leaderboardLink__Vf6MI * {
     pointer-events: auto !important;
+  }
+
+  /* Awesome shiny leaderboard icon styling */
+  .nav_trophyIcon__c74LO {
+    position: relative !important;
+    filter: drop-shadow(0 0 6px rgba(234, 211, 81, 1)) 
+            drop-shadow(0 0 12px rgba(234, 211, 81, 0.9))
+            drop-shadow(0 0 18px rgba(234, 211, 81, 0.7))
+            drop-shadow(0 0 24px rgba(234, 211, 81, 0.5)) !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    animation: nav_iconPulse__animation 2s ease-in-out infinite !important;
+    overflow: visible !important;
+  }
+
+  /* Shimmer overlay effect for leaderboard icon */
+  .nav_leaderboardLink__Vf6MI .nav_trophyIcon__c74LO::after {
+    content: "" !important;
+    position: absolute !important;
+    top: -50% !important;
+    left: -50% !important;
+    width: 200% !important;
+    height: 200% !important;
+    background: linear-gradient(
+      45deg,
+      transparent 30%,
+      rgba(234, 211, 81, 0.4) 50%,
+      transparent 70%
+    ) !important;
+    animation: nav_shimmer__animation 3s infinite !important;
+    pointer-events: none !important;
+    z-index: 10 !important;
+    border-radius: 50% !important;
+  }
+
+  @keyframes nav_shimmer__animation {
+    0% {
+      transform: translateX(-100%) translateY(-100%) rotate(45deg) !important;
+      opacity: 0 !important;
+    }
+    50% {
+      opacity: 1 !important;
+    }
+    100% {
+      transform: translateX(100%) translateY(100%) rotate(45deg) !important;
+      opacity: 0 !important;
+    }
+  }
+
+  @keyframes nav_iconPulse__animation {
+    0%, 100% {
+      filter: drop-shadow(0 0 6px rgba(234, 211, 81, 1)) 
+              drop-shadow(0 0 12px rgba(234, 211, 81, 0.9))
+              drop-shadow(0 0 18px rgba(234, 211, 81, 0.7))
+              drop-shadow(0 0 24px rgba(234, 211, 81, 0.5)) !important;
+    }
+    50% {
+      filter: drop-shadow(0 0 10px rgba(234, 211, 81, 1)) 
+              drop-shadow(0 0 20px rgba(234, 211, 81, 1))
+              drop-shadow(0 0 30px rgba(234, 211, 81, 0.9))
+              drop-shadow(0 0 40px rgba(234, 211, 81, 0.7)) !important;
+    }
+  }
+
+  .nav_trophyIcon__c74LO:hover {
+    filter: drop-shadow(0 0 12px rgba(234, 211, 81, 1)) 
+            drop-shadow(0 0 24px rgba(234, 211, 81, 1))
+            drop-shadow(0 0 36px rgba(234, 211, 81, 1))
+            drop-shadow(0 0 48px rgba(234, 211, 81, 0.9)) !important;
+    transform: scale(1.15) rotate(5deg) !important;
+    animation: none !important;
+  }
+
+  /* Awesome shiny trophy emoji icon */
+  .nav_trophyEmoji__shiny {
+    font-size: 20px !important;
+    line-height: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+    filter: drop-shadow(0 0 8px rgba(234, 211, 81, 1))
+            drop-shadow(0 0 16px rgba(234, 211, 81, 0.9))
+            drop-shadow(0 0 24px rgba(234, 211, 81, 0.8))
+            drop-shadow(0 0 32px rgba(234, 211, 81, 0.7))
+            drop-shadow(0 0 40px rgba(234, 211, 81, 0.6)) !important;
+    text-shadow: 0 0 10px rgba(234, 211, 81, 1),
+                 0 0 20px rgba(234, 211, 81, 0.9),
+                 0 0 30px rgba(234, 211, 81, 0.8),
+                 0 0 40px rgba(234, 211, 81, 0.7),
+                 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    animation: nav_trophyShine__animation 2.5s ease-in-out infinite !important;
+    transform-origin: center !important;
+  }
+
+  @keyframes nav_trophyShine__animation {
+    0%, 100% {
+      filter: drop-shadow(0 0 8px rgba(234, 211, 81, 1))
+              drop-shadow(0 0 16px rgba(234, 211, 81, 0.9))
+              drop-shadow(0 0 24px rgba(234, 211, 81, 0.8))
+              drop-shadow(0 0 32px rgba(234, 211, 81, 0.7))
+              drop-shadow(0 0 40px rgba(234, 211, 81, 0.6)) !important;
+      text-shadow: 0 0 10px rgba(234, 211, 81, 1),
+                   0 0 20px rgba(234, 211, 81, 0.9),
+                   0 0 30px rgba(234, 211, 81, 0.8),
+                   0 0 40px rgba(234, 211, 81, 0.7),
+                   0 2px 4px rgba(0, 0, 0, 0.3) !important;
+      transform: scale(1) rotate(0deg) !important;
+    }
+    25% {
+      filter: drop-shadow(0 0 12px rgba(234, 211, 81, 1))
+              drop-shadow(0 0 24px rgba(234, 211, 81, 1))
+              drop-shadow(0 0 36px rgba(234, 211, 81, 1))
+              drop-shadow(0 0 48px rgba(234, 211, 81, 0.9))
+              drop-shadow(0 0 60px rgba(234, 211, 81, 0.8)) !important;
+      text-shadow: 0 0 15px rgba(234, 211, 81, 1),
+                   0 0 30px rgba(234, 211, 81, 1),
+                   0 0 45px rgba(234, 211, 81, 1),
+                   0 0 60px rgba(234, 211, 81, 0.9),
+                   0 2px 4px rgba(0, 0, 0, 0.3) !important;
+      transform: scale(1.05) rotate(-2deg) !important;
+    }
+    50% {
+      filter: drop-shadow(0 0 10px rgba(234, 211, 81, 1))
+              drop-shadow(0 0 20px rgba(234, 211, 81, 1))
+              drop-shadow(0 0 30px rgba(234, 211, 81, 1))
+              drop-shadow(0 0 40px rgba(234, 211, 81, 0.9))
+              drop-shadow(0 0 50px rgba(234, 211, 81, 0.8)) !important;
+      text-shadow: 0 0 12px rgba(234, 211, 81, 1),
+                   0 0 24px rgba(234, 211, 81, 1),
+                   0 0 36px rgba(234, 211, 81, 1),
+                   0 0 48px rgba(234, 211, 81, 1),
+                   0 2px 4px rgba(0, 0, 0, 0.3) !important;
+      transform: scale(1.08) rotate(2deg) !important;
+    }
+    75% {
+      filter: drop-shadow(0 0 12px rgba(234, 211, 81, 1))
+              drop-shadow(0 0 24px rgba(234, 211, 81, 1))
+              drop-shadow(0 0 36px rgba(234, 211, 81, 1))
+              drop-shadow(0 0 48px rgba(234, 211, 81, 0.9))
+              drop-shadow(0 0 60px rgba(234, 211, 81, 0.8)) !important;
+      text-shadow: 0 0 15px rgba(234, 211, 81, 1),
+                   0 0 30px rgba(234, 211, 81, 1),
+                   0 0 45px rgba(234, 211, 81, 1),
+                   0 0 60px rgba(234, 211, 81, 0.9),
+                   0 2px 4px rgba(0, 0, 0, 0.3) !important;
+      transform: scale(1.05) rotate(-2deg) !important;
+    }
+  }
+
+  .nav_leaderboardLink__Vf6MI:hover .nav_trophyEmoji__shiny {
+    filter: drop-shadow(0 0 16px rgba(234, 211, 81, 1))
+            drop-shadow(0 0 32px rgba(234, 211, 81, 1))
+            drop-shadow(0 0 48px rgba(234, 211, 81, 1))
+            drop-shadow(0 0 64px rgba(234, 211, 81, 1))
+            drop-shadow(0 0 80px rgba(234, 211, 81, 0.9)) !important;
+    text-shadow: 0 0 20px rgba(234, 211, 81, 1),
+                 0 0 40px rgba(234, 211, 81, 1),
+                 0 0 60px rgba(234, 211, 81, 1),
+                 0 0 80px rgba(234, 211, 81, 1),
+                 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    transform: scale(1.2) rotate(8deg) !important;
+    animation: none !important;
+  }
+
+  /* Shiny effect for Profile emoji icon */
+  .nav_trophyIcon__c74LO > div {
+    filter: drop-shadow(0 0 3px rgba(234, 211, 81, 0.9)) 
+            drop-shadow(0 0 6px rgba(234, 211, 81, 0.7)) !important;
+    transition: all 0.3s ease !important;
+    text-shadow: 0 0 8px rgba(234, 211, 81, 0.8) !important;
+  }
+
+  .nav_leaderboardLink__Vf6MI:hover .nav_trophyIcon__c74LO > div {
+    filter: drop-shadow(0 0 6px rgba(234, 211, 81, 1)) 
+            drop-shadow(0 0 12px rgba(234, 211, 81, 0.9)) !important;
+    text-shadow: 0 0 12px rgba(234, 211, 81, 1), 0 0 20px rgba(234, 211, 81, 0.8) !important;
+    transform: scale(1.1) !important;
   }
   
   /* Wallet buttons - ensure clickable and properly sized */
@@ -308,6 +482,11 @@ body, main, section, div, p, h1, h2, h3, h4, h5, h6, span, button, a, td, th, ta
     cursor: pointer !important;
     -webkit-user-select: none !important;
     user-select: none !important;
+    font-size: 0.8em !important;
+    padding-top: 3px !important;
+    padding-bottom: 3px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
   }
   
   /* Button children should not block clicks */
@@ -337,9 +516,9 @@ body, main, section, div, p, h1, h2, h3, h4, h5, h6, span, button, a, td, th, ta
 }
 
 /* Extra small screens - Reference: squad.css @media (max-width: 350px) */
-@media (max-width: 350px) {
+@media (max-width: 450px) {
   .nav_navright__R_2jL {
-    gap: 10px !important;
+    gap: 5px !important;
   }
 }
 
@@ -1518,6 +1697,39 @@ main:has(.leaderboard_container__yi1Tg) {
 @media (max-width: 768px) {
   .profile-page {
     padding-top: 50px !important;
+  }
+}
+
+/* ============================================
+   NAVIGATION ICONS - Mobile Responsive
+   ============================================ */
+@media (max-width: 768px) {
+  /* Make leaderboard icon same size as profile icon on mobile */
+  .nav_trophyEmoji__shiny {
+    font-size: 20px !important;
+    width: 24px !important;
+    height: 24px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+    /* Reduce glow effects on mobile for better performance */
+    filter: drop-shadow(0 0 4px rgba(234, 211, 81, 1))
+            drop-shadow(0 0 8px rgba(234, 211, 81, 0.8))
+            drop-shadow(0 0 12px rgba(234, 211, 81, 0.6)) !important;
+    text-shadow: 0 0 6px rgba(234, 211, 81, 1),
+                 0 0 12px rgba(234, 211, 81, 0.8),
+                 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .nav_leaderboardLink__Vf6MI:hover .nav_trophyEmoji__shiny {
+    filter: drop-shadow(0 0 6px rgba(234, 211, 81, 1))
+            drop-shadow(0 0 12px rgba(234, 211, 81, 1))
+            drop-shadow(0 0 18px rgba(234, 211, 81, 0.9)) !important;
+    text-shadow: 0 0 8px rgba(234, 211, 81, 1),
+                 0 0 16px rgba(234, 211, 81, 1),
+                 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    transform: scale(1.1) rotate(5deg) !important;
   }
 }
 
