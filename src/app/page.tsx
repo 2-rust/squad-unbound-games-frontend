@@ -192,6 +192,20 @@ function HomeContent() {
   );
   const [selectedMethod, setSelectedMethod] = useState("strava");
   
+  // Reference: squad.unbound.games-meditation-select.htm - when meditation is selected, auto-select Mental Strength and Leadership
+  // Reference: squad.unbound.games-yoga-select.htm - when yoga is selected, auto-select Mental Strength, Agility and Technique
+  const getSelectedAttributesForMethod = (method: string): string[] => {
+    if (method === "meditation") {
+      return ["mental", "leadership"]; // Mental Strength and Leadership
+    }
+    if (method === "yoga") {
+      return ["mental", "agility", "technique"]; // Mental Strength, Agility and Technique
+    }
+    return [selectedAttribute]; // Default: single attribute
+  };
+  
+  const selectedAttributesForCurrentMethod = getSelectedAttributesForMethod(selectedMethod);
+  
   // Get the app URL from environment variable or use current origin
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || 
     (typeof window !== "undefined" ? window.location.origin : "https://squad-unbound-games.vercel.app");
@@ -706,17 +720,35 @@ function HomeContent() {
 
   const handleConfirm = () => {
     // Reference: squad.unbound.games-strava.html - second section confirm selection
+    // Reference: squad.unbound.games-meditation-select.htm - when meditation is selected, use Mental Strength and Leadership
+    // Reference: squad.unbound.games-yoga-select.htm - when yoga is selected, use Mental Strength, Agility and Technique
     if (confirmDisabled) return;
-    const attribute = attributeOptions.find(
-      (option) => option.id === selectedAttribute,
-    );
+    
     const method = trainingMethods.find(
       (option) => option.id === selectedMethod,
     );
+    
+    let message = "";
+    
+    // For meditation, show both Mental Strength and Leadership
+    if (selectedMethod === "meditation") {
+      const mentalAttr = attributeOptions.find(opt => opt.id === "mental");
+      const leadershipAttr = attributeOptions.find(opt => opt.id === "leadership");
+      message = `${activeFighter.name} is now focusing on ${mentalAttr?.title} and ${leadershipAttr?.title} via ${method?.title}.`;
+    } else if (selectedMethod === "yoga") {
+      // For yoga, show Mental Strength, Agility and Technique
+      const mentalAttr = attributeOptions.find(opt => opt.id === "mental");
+      const agilityAttr = attributeOptions.find(opt => opt.id === "agility");
+      const techniqueAttr = attributeOptions.find(opt => opt.id === "technique");
+      message = `${activeFighter.name} is now focusing on ${mentalAttr?.title}, ${agilityAttr?.title} and ${techniqueAttr?.title} via ${method?.title}.`;
+    } else {
+      const attribute = attributeOptions.find(
+        (option) => option.id === selectedAttribute,
+      );
+      message = `${activeFighter.name} is now focusing on ${attribute?.title} via ${method?.title}.`;
+    }
 
-    setSelectionMessage(
-      `${activeFighter.name} is now focusing on ${attribute?.title} via ${method?.title}.`,
-    );
+    setSelectionMessage(message);
     setSelectionConfirmed(true);
   };
 
@@ -1270,30 +1302,40 @@ function HomeContent() {
               Please select from the three training options
             </p>
             {/* Reference: squad.unbound.games-noNFT.html - second section shows all attributes and training methods even when no NFTs */}
+            {/* Reference: squad.unbound.games-meditation-select.htm - when meditation is selected, highlight Mental Strength and Leadership */}
+            {/* Reference: squad.unbound.games-yoga-select.htm - when yoga is selected, highlight Mental Strength, Agility and Technique */}
             <div className="attributeselect_attributesGrid__lwVep">
-              {attributeOptions.map((attribute) => (
-                <div
-                  key={attribute.id}
-                  className={`attributeselect_attributeCard__qYQrc ${
-                    selectedAttribute === attribute.id
-                      ? "attributeselect_highlighted__8f7K6"
-                      : ""
-                  }`}
-                >
-                  <div className="attributeselect_attributeEmoji__UR7UH">
-                    {attribute.emoji}
+              {attributeOptions.map((attribute) => {
+                // For meditation, highlight Mental Strength (mental) and Leadership
+                // For yoga, highlight Mental Strength (mental), Agility and Technique
+                const isHighlighted = (selectedMethod === "meditation" || selectedMethod === "yoga")
+                  ? selectedAttributesForCurrentMethod.includes(attribute.id)
+                  : selectedAttribute === attribute.id;
+                
+                return (
+                  <div
+                    key={attribute.id}
+                    className={`attributeselect_attributeCard__qYQrc ${
+                      isHighlighted
+                        ? "attributeselect_highlighted__8f7K6"
+                        : ""
+                    }`}
+                  >
+                    <div className="attributeselect_attributeEmoji__UR7UH">
+                      {attribute.emoji}
+                    </div>
+                    <div className="attributeselect_attributeName__QitHW">
+                      {attribute.title}
+                    </div>
+                    <div className="attributeselect_attributeDescription__H8yAt">
+                      {attribute.description}
+                    </div>
+                    <div className="attributeselect_attributeStatus__1_Ygw">
+                      {attribute.status}
+                    </div>
                   </div>
-                  <div className="attributeselect_attributeName__QitHW">
-                    {attribute.title}
-                  </div>
-                  <div className="attributeselect_attributeDescription__H8yAt">
-                    {attribute.description}
-                  </div>
-                  <div className="attributeselect_attributeStatus__1_Ygw">
-                    {attribute.status}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <div className="attributeselect_trainingMethodsContainer__FGBUC">
               <h2 className="attributeselect_trainingTitle__i9dX5">
