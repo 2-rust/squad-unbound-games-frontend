@@ -19,15 +19,14 @@ export interface NFTMetadata {
 
 /**
  * Converts IPFS URI to HTTP gateway URL
- * Uses Pinata IPFS gateway (gateway.pinata.cloud) to match reference implementation
- * Reference: https://gateway.pinata.cloud/ipfs/QmRq55RVxP2ifsNJ6iUcdqpNZ6Gpt6iPj24xxWmR4yrPYT/1768.jpg
+ * Uses Pinata IPFS gateway (gateway.pinata.cloud)
  */
 export function convertIPFSToHTTP(ipfsUri: string): string {
   if (ipfsUri.startsWith("ipfs://")) {
     // Remove ipfs:// prefix and handle paths
     // Format: ipfs://QmHash/path/to/file.jpg -> https://gateway.pinata.cloud/ipfs/QmHash/path/to/file.jpg
     const path = ipfsUri.replace("ipfs://", "").replace(/^\/+/, ""); // Remove leading slashes
-    // Use Pinata IPFS gateway to match reference
+    // Use Pinata IPFS gateway
     return `https://gateway.pinata.cloud/ipfs/${path}`;
   }
   return ipfsUri;

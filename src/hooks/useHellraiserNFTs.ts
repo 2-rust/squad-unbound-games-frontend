@@ -121,22 +121,15 @@ export function useHellraiserNFTs() {
   }, [balanceCount, isConnected, address, hasContractAddress, isLoadingBalance, totalSupplyCount]);
 
   // Strategy: Use tokenOfOwnerByIndex to get token IDs directly (much more efficient!)
-  // This follows the same pattern as the reference code:
   // 1. Get balance of NFTs owned by the wallet
   // 2. Loop through indices (0 to balanceCount-1) using tokenOfOwnerByIndex
   // 3. Extract token IDs from the results
   // 4. Fetch metadata for each token ID
   // This is more efficient than checking ownerOf for each token ID in the collection
-  // Reference: pages/index.js - Main Next.js Page (tokenOfOwnerByIndex approach)
   const tokenOfOwnerByIndexContracts = useMemo(() => {
     if (!address || balanceCount === 0 || !hasContractAddress) return [];
     
     // Create contracts for each index (0 to balanceCount-1)
-    // This matches the reference code's approach:
-    // for (let i = 0; i < balanceNumber; i++) {
-    //   const tokenId = await contract.tokenOfOwnerByIndex(address, i);
-    //   tokenIds.push(tokenId.toString());
-    // }
     return Array.from({ length: balanceCount }, (_, index) => ({
       address: HELLRAISER_NFT_CONTRACT as `0x${string}`,
       abi: ERC721_ABI,

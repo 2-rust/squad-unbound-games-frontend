@@ -56,7 +56,7 @@ const getFighterImage = (name: string): string => {
   // Extract fighter name without the #number part
   const fighterName = name.split(" #")[0].trim();
   
-  // Mapping based on reference site HTML
+  // Mapping fighter names to image numbers
   const imageMap: Record<string, string> = {
     "ERNEST": "48",
     "SILVAA": "34",
@@ -115,7 +115,7 @@ const getFighterImage = (name: string): string => {
   return `/assets/leaderboard/${imageNum.padStart(2, "0")}.jpg`;
 };
 
-// Fighter data matching the reference site exactly (from leaderboard - Fighter Rank.htm)
+// Fighter data
 const fighterBase: FighterRow[] = [
   { rank: 1, tokenId: "53", name: "FAE #33", image: getFighterImage("FAE #33"), endurance: 75, enduranceDelta: "+21.5", agility: 87, agilityDelta: "+3.1", mental: 77, mentalDelta: "+6.1", leadership: 86, leadershipDelta: "+2", distance: "140 km" },
   { rank: 2, tokenId: "503", name: "SERAPHYM #29", image: getFighterImage("SERAPHYM #29"), endurance: 63, enduranceDelta: "+27.5", agility: 88, agilityDelta: "+0", mental: 77, mentalDelta: "+0", leadership: 90, leadershipDelta: "+0", distance: "140 km" },
@@ -677,7 +677,7 @@ export default function LeaderboardPage() {
               })}
             {activeView === "Trainer Rank" &&
               (tableConfig.rows as TrainerRow[]).map((row) => {
-                // Format rank with emoji for top 3, matching reference site spacing
+                // Format rank with emoji for top 3
                 const rankDisplay = row.rank === 1 ? " 🥇   1" : row.rank === 2 ? "  🥈  2" : row.rank === 3 ? "   🥉 3" : `    ${row.rank}`;
                 
                 // Get profile for this trainer's wallet
@@ -718,7 +718,7 @@ export default function LeaderboardPage() {
               })}
             {activeView === "Activity" &&
               (tableConfig.rows as ActivityRow[]).map((row) => {
-                // Format rank with emoji for top 3, matching reference site spacing
+                // Format rank with emoji for top 3
                 const rankDisplay = row.rank === 1 ? " 🥇   1" : row.rank === 2 ? "  🥈  2" : row.rank === 3 ? "   🥉 3" : `    ${row.rank}`;
                 
                 // Get profile for this wallet

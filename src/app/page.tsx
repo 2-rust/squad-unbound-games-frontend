@@ -192,14 +192,12 @@ function HomeContent() {
   );
   const [selectedMethod, setSelectedMethod] = useState("strava");
   
-  // Reference: squad.unbound.games-meditation-select.htm - when meditation is selected, auto-select Mental Strength and Leadership
-  // Reference: squad.unbound.games-yoga-select.htm - when yoga is selected, auto-select Mental Strength, Agility and Technique
   const getSelectedAttributesForMethod = (method: string): string[] => {
     if (method === "meditation") {
       return ["mental", "leadership"]; // Mental Strength and Leadership
     }
     if (method === "yoga") {
-      return ["mental", "agility", "technique"]; // Mental Strength, Agility and Technique
+      return ["mental", "agility"]; // Mental Strength, Agility
     }
     return [selectedAttribute]; // Default: single attribute
   };
@@ -459,7 +457,6 @@ function HomeContent() {
   );
 
   // Use Hellraiser NFTs if available, otherwise use default fighter cards
-  // Reference: squad.unbound.games-noNFT.html - when wallet connected but no NFTs
   const availableCards = useMemo(() => {
     if (hasHellraiserNFTs && hellraiserNFTs.length > 0) {
       // Show all NFTs from wallet
@@ -475,7 +472,6 @@ function HomeContent() {
       }));
     }
     // When wallet is connected but no NFTs found, show empty card
-    // Reference: squad.unbound.games-noNFT.html shows empty card with "Empty" name
     if (walletConnected && !isLoadingHellraiser && hellraiserBalance === 0) {
       return [{
         id: "#000",
@@ -584,11 +580,9 @@ function HomeContent() {
   };
   
   // Check if we're showing the empty state (no NFTs in wallet)
-  // Reference: squad.unbound.games-noNFT.html - shows empty card when wallet connected but no NFTs
   const isShowingEmptyState = walletConnected && !isLoadingHellraiser && hellraiserBalance === 0 && !hasHellraiserNFTs;
   
   // Extract numeric attributes for display - Always show all 12 attributes like the site
-  // Reference: The site shows all 12 attributes (punch, endurance, speed, defense, technique, mental strength, intelligence, charisma, stealth, leadership, agility, luck)
   const numericAttributes = useMemo(() => {
     // Define all 12 attributes in the order they appear on the site
     const allAttributes = [
@@ -606,7 +600,7 @@ function HomeContent() {
       { id: 'luck', name: 'luck' },
     ];
 
-    // Default values matching the reference site
+    // Default values
     const defaultValues: Record<string, number> = {
       'punch': 92,
       'endurance': 85,
@@ -720,9 +714,6 @@ function HomeContent() {
   const confirmDisabled = !activeFighter?.isOwned || !walletConnected;
 
   const handleConfirm = () => {
-    // Reference: squad.unbound.games-strava.html - second section confirm selection
-    // Reference: squad.unbound.games-meditation-select.htm - when meditation is selected, use Mental Strength and Leadership
-    // Reference: squad.unbound.games-yoga-select.htm - when yoga is selected, use Mental Strength, Agility and Technique
     if (confirmDisabled) return;
     
     const method = trainingMethods.find(
@@ -737,11 +728,10 @@ function HomeContent() {
       const leadershipAttr = attributeOptions.find(opt => opt.id === "leadership");
       message = `${activeFighter.name} is now focusing on ${mentalAttr?.title} and ${leadershipAttr?.title} via ${method?.title}.`;
     } else if (selectedMethod === "yoga") {
-      // For yoga, show Mental Strength, Agility and Technique
+      // For yoga, show Mental Strength, Agility
       const mentalAttr = attributeOptions.find(opt => opt.id === "mental");
       const agilityAttr = attributeOptions.find(opt => opt.id === "agility");
-      const techniqueAttr = attributeOptions.find(opt => opt.id === "technique");
-      message = `${activeFighter.name} is now focusing on ${mentalAttr?.title}, ${agilityAttr?.title} and ${techniqueAttr?.title} via ${method?.title}.`;
+      message = `${activeFighter.name} is now focusing on ${mentalAttr?.title} and ${agilityAttr?.title} via ${method?.title}.`;
     } else {
       const attribute = attributeOptions.find(
         (option) => option.id === selectedAttribute,
@@ -776,7 +766,6 @@ function HomeContent() {
   };
 
   const handleMeditationSync = async () => {
-    // Reference: squad.unbound.games-course.html - meditation sync logic
     if (syncStatus === "syncing") return;
     
     if (!selectedCourse) {
@@ -889,7 +878,6 @@ function HomeContent() {
   }, []);
 
   const handleYogaSync = async () => {
-    // Reference: squad.unbound.games-yoga.html - yoga sync logic
     if (syncStatus === "syncing") return;
     
     if (!selectedCourse) {
@@ -944,7 +932,6 @@ function HomeContent() {
       return handleYogaSync();
     }
     
-    // Reference: squad.unbound.games-strava.html - fourth section sync button
     if (syncStatus === "syncing") return;
     
     if (!stravaConnected) {
@@ -1283,7 +1270,6 @@ function HomeContent() {
                   </button>
                 </div>
                 {/* Attributes Grid - Display NFT attributes with progress bars */}
-                {/* Reference: squad.unbound.games-noNFT.html - attributes grid not shown when no NFTs */}
                 {!isShowingEmptyState && (
                   numericAttributes.length > 0 ? (
                     <div className="carousel_attributesGrid__H19vs">
@@ -1305,7 +1291,7 @@ function HomeContent() {
                     // Fallback: show all 12 attributes with default values if no attributes found
                     <div className="carousel_attributesGrid__H19vs">
                       {attributeOptions.map((attr) => {
-                        // Map attribute IDs to default values (matching reference HTML)
+                        // Map attribute IDs to default values
                         const defaultValues: Record<string, number> = {
                           punch: 92,
                           endurance: 85,
@@ -1366,46 +1352,7 @@ function HomeContent() {
             <p className="attributeselect_subtitle__TGHPj">
               Please select from the three training options
             </p>
-            {/* Reference: squad.unbound.games-noNFT.html - second section shows all attributes and training methods even when no NFTs */}
-            {/* Reference: squad.unbound.games-meditation-select.htm - when meditation is selected, highlight Mental Strength and Leadership */}
-            {/* Reference: squad.unbound.games-yoga-select.htm - when yoga is selected, highlight Mental Strength, Agility and Technique */}
-            <div className="attributeselect_attributesGrid__lwVep">
-              {attributeOptions.map((attribute) => {
-                // For meditation, highlight Mental Strength (mental) and Leadership
-                // For yoga, highlight Mental Strength (mental), Agility and Technique
-                const isHighlighted = (selectedMethod === "meditation" || selectedMethod === "yoga")
-                  ? selectedAttributesForCurrentMethod.includes(attribute.id)
-                  : selectedAttribute === attribute.id;
-                
-                return (
-                  <div
-                    key={attribute.id}
-                    className={`attributeselect_attributeCard__qYQrc ${
-                      isHighlighted
-                        ? "attributeselect_highlighted__8f7K6"
-                        : ""
-                    }`}
-                  >
-                    <div className="attributeselect_attributeEmoji__UR7UH">
-                      {attribute.emoji}
-                    </div>
-                    <div className="attributeselect_attributeName__QitHW">
-                      {attribute.title}
-                    </div>
-                    <div className="attributeselect_attributeDescription__H8yAt">
-                      {attribute.description}
-                    </div>
-                    <div className="attributeselect_attributeStatus__1_Ygw">
-                      {attribute.status}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
             <div className="attributeselect_trainingMethodsContainer__FGBUC">
-              <h2 className="attributeselect_trainingTitle__i9dX5">
-                Training Methods
-              </h2>
               <div className="attributeselect_trainingMethods__x5qtS">
                 {trainingMethods.map((method) => (
                   <button
@@ -1440,6 +1387,39 @@ function HomeContent() {
                 ))}
               </div>
             </div>
+            <div className="attributeselect_attributesGrid__lwVep">
+              {attributeOptions.map((attribute) => {
+                // For meditation, highlight Mental Strength (mental) and Leadership
+                // For yoga, highlight Mental Strength (mental), Agility
+                const isHighlighted = (selectedMethod === "meditation" || selectedMethod === "yoga")
+                  ? selectedAttributesForCurrentMethod.includes(attribute.id)
+                  : selectedAttribute === attribute.id;
+                
+                return (
+                  <div
+                    key={attribute.id}
+                    className={`attributeselect_attributeCard__qYQrc ${
+                      isHighlighted
+                        ? "attributeselect_highlighted__8f7K6"
+                        : ""
+                    }`}
+                  >
+                    <div className="attributeselect_attributeEmoji__UR7UH">
+                      {attribute.emoji}
+                    </div>
+                    <div className="attributeselect_attributeName__QitHW">
+                      {attribute.title}
+                    </div>
+                    <div className="attributeselect_attributeDescription__H8yAt">
+                      {attribute.description}
+                    </div>
+                    <div className="attributeselect_attributeStatus__1_Ygw">
+                      {attribute.status}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
             {selectionMessage && (
               <div className="attributeselect_successMessage___Svfu" style={{ marginBottom: "20px" }}>
                 {selectionMessage}
@@ -1457,7 +1437,6 @@ function HomeContent() {
         </section>
 
         <section id="third-section" className="index_wrapper3__A9vvd" style={{ margin: 0, padding: 0 }}>
-          {/* Reference: squad.unbound.games-noNFT.html - third section shows error when no fighter set or no NFTs */}
           {availableCards.length > 0 && activeFighter && !isShowingEmptyState && activeFighter.isOwned ? (
             <div className="fighterdisplay_wrapper__q5JIV" style={{ backgroundImage: `url("https://storage.googleapis.com/fu-public-asset/background/18.jpg")`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", width: "100%", minHeight: "100vh" }}>
               <div className="fighterdisplay_imageBarLeft__ECvHX"></div>
@@ -1502,7 +1481,7 @@ function HomeContent() {
                       ) : (
                         // Fallback: show all 12 attributes with default values if no attributes found
                         attributeOptions.map((attr) => {
-                          // Map attribute IDs to default values (matching reference HTML)
+                          // Map attribute IDs to default values
                           const defaultValues: Record<string, number> = {
                             punch: 92,
                             endurance: 85,
@@ -1551,11 +1530,9 @@ function HomeContent() {
                 </div>
                 <div className="fighterdisplay_squaretext__xkfDf">Strava linked to @dillon_marszalek! You&apos;re ready for training</div>
               </div>
-              <div className="fighterdisplay_imageBarRight__h36Ad"></div>
+              <div className="fighterdisplay_imageBarRight__h36Ad">              </div>
             </div>
           ) : (
-            // Reference: squad.unbound.games-noNFT.html - third section shows error when no fighter set
-            // CSS class fighterdisplay_wrapper__q5JIV already defines background from squad.css
             <div className="fighterdisplay_wrapper__q5JIV" style={{ width: "100%", minHeight: "100vh", margin: 0, padding: 0 }}>
               <span className="fighterdisplay_error_text__3Oc7Y" style={{ color: "black" }}>
                 Please set your {hasHellraiserNFTs ? "Hellraiser" : "fighter"} first
@@ -1565,7 +1542,6 @@ function HomeContent() {
         </section>
 
         <section id="fourth-section" className="index_wrapper3__A9vvd" style={{ margin: 0, padding: 0, marginTop: 0 }}>
-          {/* Reference: squad.unbound.games-strava.html - fourth section shows Strava sync interface when Strava is selected and confirmed */}
           {availableCards.length > 0 && activeFighter && !isShowingEmptyState && activeFighter.isOwned ? (
             // Show Strava sync interface if Strava is selected and confirmed (connection happens in third section)
             selectionConfirmed && selectedMethod === "strava" ? (
@@ -1578,21 +1554,10 @@ function HomeContent() {
                       Training Cycle #8 Ends In {countdown.days}d {countdown.hours}h {countdown.minutes}m {countdown.seconds}s
                     </div>
                     
-                    {/* Progress Ring - Reference: squad.unbound.games-strava.html
-                        Reference HTML shows:
-                        - Background circle: stroke-dashoffset="117.80972450961724" at 0km (shows 75% of circle = remaining 20km capacity)
-                        - Filled circle: stroke-dashoffset="471.23889803846896" at 0km (fully offset, 0% visible)
-                        - Circumference: 471.23889803846896 (2 * π * 75)
-                        - Max distance: 20 km per fighter
-                        - When distance increases, background offset increases (less visible), filled offset decreases (more visible)
-                    */}
+                    {/* Progress Ring */}
                     <div className="training_ringOuter__D8pMH">
                       <svg className="training_ringWrapper__jGkJZ" width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                        {/* Background circle (white) - shows remaining unfilled portion
-                            At 0km: offset = 117.80972450961724 (75% of circle visible, showing 20km capacity)
-                            At 20km: offset = 471.23889803846896 (0% visible, capacity exhausted)
-                            Formula: offset = 117.80972450961724 + (471.23889803846896 - 117.80972450961724) * (distance / 20)
-                        */}
+                        {/* Background circle (white) - shows remaining unfilled portion */}
                         <circle 
                           className="training_backgroundCircle__pg49G" 
                           cx="100" 
@@ -1605,9 +1570,7 @@ function HomeContent() {
                           fill="transparent" 
                           transform="rotate(136, 100 100)"
                         />
-                        {/* Additional circle (green) - always fully offset (not visible)
-                            This appears to be a placeholder or future feature indicator
-                        */}
+                        {/* Additional circle (green) - always fully offset (not visible) */}
                         <circle 
                           className="training_additionalCircle__2Bj5_" 
                           cx="100" 
@@ -1620,11 +1583,7 @@ function HomeContent() {
                           fill="transparent" 
                           transform="rotate(136 100 100)"
                         />
-                        {/* Filled circle (red) - shows progress
-                            At 0km: offset = 471.23889803846896 (fully offset, 0% visible)
-                            At 20km: offset = 0 (fully visible, 100% progress)
-                            Formula: offset = 471.23889803846896 * (1 - distance / 20)
-                        */}
+                        {/* Filled circle (red) - shows progress */}
                         <circle 
                           className="training_filledCircle__jlsYS" 
                           cx="100" 
@@ -1948,7 +1907,6 @@ function HomeContent() {
               </div>
             )
           ) : (
-            // Reference: squad.unbound.games-noNFT.html - fourth section shows error when no fighter set
             <div className="training_wrapper__ue0tT" style={{ width: "100%", minHeight: "100vh", margin: 0, padding: 0, marginTop: 0 }}>
               <span className="training_error_text__2Mxa8" style={{ color: "black" }}>
                 Please set your {hasHellraiserNFTs ? "Hellraiser" : "fighter"} first

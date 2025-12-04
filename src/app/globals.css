@@ -104,7 +104,7 @@ body, main, section, div, p, h1, h2, h3, h4, h5, h6, span, button, a, td, th, ta
   }
 }
 
-/* Mobile responsive - Reference: https://squad.unbound.games/ */
+/* Mobile responsive */
 @media (max-width: 768px) {
   /* Prevent horizontal overflow at root level */
   html {
@@ -251,7 +251,7 @@ body, main, section, div, p, h1, h2, h3, h4, h5, h6, span, button, a, td, th, ta
   }
   
   /* ============================================
-     HEADER - Mobile Responsive (matching reference site)
+     HEADER - Mobile Responsive
      ============================================ */
   
   /* Header container - ensure clickability */
@@ -515,7 +515,7 @@ body, main, section, div, p, h1, h2, h3, h4, h5, h6, span, button, a, td, th, ta
   }
 }
 
-/* Extra small screens - Reference: squad.css @media (max-width: 350px) */
+/* Extra small screens */
 @media (max-width: 450px) {
   .nav_navright__R_2jL {
     gap: 5px !important;
@@ -542,7 +542,6 @@ body, main, section, div, p, h1, h2, h3, h4, h5, h6, span, button, a, td, th, ta
 
 /* ============================================
    LEADERBOARD - Mobile Responsive
-   Reference: leaderboard.css and leaderboard.htm
    ============================================ */
 
 /* ============================================
@@ -1032,7 +1031,7 @@ main:has(.leaderboard_container__yi1Tg) {
   }
 }
 
-/* Tablet and below (768px) - Matching reference site */
+/* Tablet and below (768px) */
 @media (max-width: 768px) {
   /* Leaderboard container - proper spacing from fixed header (50px navbar + 20px) */
   .leaderboard_container__yi1Tg {
@@ -1318,7 +1317,7 @@ main:has(.leaderboard_container__yi1Tg) {
     height: 20px !important;
   }
 
-  /* My info alignment - matching reference */
+  /* My info alignment */
   .leaderboard_myinfo__sV9iM {
     text-align: center !important;
   }
@@ -1509,7 +1508,7 @@ main:has(.leaderboard_container__yi1Tg) {
   }
 }
 
-/* Extra small devices (350px and below) - Matching reference */
+/* Extra small devices (350px and below) */
 @media (max-width: 350px) {
   .leaderboard_container__yi1Tg {
     padding: 0.4rem !important;
